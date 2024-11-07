@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "./components/NavBar";
+import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import MovieGrid from "./components/MovieGrid";
 import "./App.css";
