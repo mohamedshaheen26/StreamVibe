@@ -19,12 +19,12 @@ function Navbar() {
           data-bs-toggle='collapse'
           data-bs-target='#navbarNav'
           aria-controls='navbarNav'
-          aria-expanded='false'
+          aria-expanded='true'
           aria-label='Toggle navigation'
         >
-          <span className='navbar-toggler-icon'></span>
+          <img src="src/assets/menuIcon.png" alt="" />
         </button>
-        <div className='navbarNav' id='navbarNav'>
+        <nav className='navbarNav collapse navbar-collapse' id='navbarNav'>
           <ul className='navbar-nav ms-auto'>
             <li className='nav-item'>
               <a className='nav-link active' aria-current='page' href='#'>
@@ -47,10 +47,14 @@ function Navbar() {
               </a>
             </li>
           </ul>
-        </div>
-        <span class='navbar-text'>
-          <i className='fas fa-search'></i>
-          <i className='fa-regular fa-bell'></i>
+        </nav>
+        <span className='navbar-text'>
+          <a href='#'>
+            <i className='fas fa-search'></i>
+          </a>
+          <a href='#'>
+            <i className='fa-regular fa-bell'></i>
+          </a>
         </span>
       </div>
     </nav>

@@ -1,13 +1,11 @@
 import React from "react";
-import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import MovieGrid from "./components/MovieGrid";
-import "./App.css";
+import "./index.css";
 
 function App() {
   return (
     <div className='App'>
-      <Navbar />
       <HeroSection />
       <MovieGrid />
     </div>
