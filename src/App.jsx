@@ -1,13 +1,16 @@
 import React from "react";
 import HeroSection from "./components/HeroSection";
-import MovieGrid from "./components/MovieGrid";
+import CategoryCarousel from "./components/CategoryCarousel";
+import ErrorBoundary from "./components/ErrorBoundary";
 import "./index.css";
 
 function App() {
   return (
     <div className='App'>
       <HeroSection />
-      <MovieGrid />
+      <ErrorBoundary>
+        <CategoryCarousel />
+      </ErrorBoundary>
     </div>
   );
 }
