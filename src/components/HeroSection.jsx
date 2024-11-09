@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import usePopularMovies from "@/hooks/usePopularMovies";
+import usePopularMovies from "@/hooks/usePopularMovies.jsx";
 import Navbar from "./Navbar.jsx";
 
 function HeroSection() {
