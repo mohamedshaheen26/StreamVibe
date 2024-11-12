@@ -21,7 +21,7 @@ const CategoryCarousel = () => {
   }
 
   return (
-    <div className='category-carousel'>
+    <div className='category-carousel' id="category-carousel">
       <div className='container'>
         <h2>Explore our wide variety of categories</h2>
         <p>

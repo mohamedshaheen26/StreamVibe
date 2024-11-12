@@ -1,9 +1,28 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
 
 function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+
+      if (
+        document.body.scrollTop >= 50 ||
+        document.documentElement.scrollTop >= 50
+      ) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav className='navbar navbar-expand-lg'>
+    <nav className={`navbar navbar-expand-lg ${scrolled ? "scrolled " : ""}`}>
       <div className='container'>
         <a className='navbar-brand' href='#'>
           <img

@@ -21,11 +21,27 @@ p {
 
 /* Navbar Styling */
 .navbar {
-  padding-top: 24px;
+  height: 100px;
   position: fixed;
-  right: 0;
+  top: 0;
   left: 0;
+  right: 0;
   z-index: 99999;
+  transition: 0.3s cubic-bezier(0, 0.54, 1, 1);
+}
+
+.navbar.scrolled {
+  /* box-shadow: 1px 1px 10px rgba(194, 194, 194, 0.1); */
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 20, 20, .9) 100%,
+    rgba(20, 20, 20, 0.3) 0%
+  );
+  height: 75px;
+}
+
+.navbar.scrolled .navbar-nav .nav-link {
+  padding: 5px 24px !important;
 }
 
 .navbar-brand {
