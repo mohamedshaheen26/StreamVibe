@@ -2,9 +2,11 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import useMovieGenres from "@/hooks/useMovieGenres";
+import useResposiveScreen from "../hooks/useResposiveScreen.js";
 
 const CategoryCarousel = () => {
   const { genres, topRatedByGenre, isLoading, error } = useMovieGenres();
+  const isMobile = useResposiveScreen();
 
   if (isLoading) {
     return <p>Loading categories...</p>;
@@ -26,35 +28,50 @@ const CategoryCarousel = () => {
           Whether you're looking for a comedy to make you laugh, a drama to make
           you think, or a documentary to learn something new
         </p>
-        <div className='swiper-control'>
-          <div className='custom-prev'>
-            <i className='fas fa-arrow-left'></i>
+
+        {/* Conditionally render based on mobile or desktop */}
+        {isMobile ? (
+          <div className='swiper-progress-bar'>
+            <div className='swiper-progress-fill'></div>
           </div>
-          <div className='custom-pagination'></div>
-          <div className='custom-next'>
-            <i className='fas fa-arrow-right'></i>
+        ) : (
+          <div className='swiper-control'>
+            <div className='custom-prev'>
+              <i className='fas fa-arrow-left'></i>
+            </div>
+            <div className='custom-pagination'></div>
+            <div className='custom-next'>
+              <i className='fas fa-arrow-right'></i>
+            </div>
           </div>
-        </div>
+        )}
+
         <Swiper
-          modules={[Navigation, Pagination]} // Enable Pagination and Navigation
+          modules={[Navigation, Pagination]}
           spaceBetween={20}
-          slidesPerView={4}
-          slidesPerGroup={4} // Scroll 4 slides at a time
-          navigation={{
-            nextEl: ".custom-next",
-            prevEl: ".custom-prev",
-          }}
-          pagination={{
-            clickable: false,
-            type: "bullets", // Use default bullet pagination type
-            el: ".custom-pagination", // Custom pagination element
-            bulletClass: "swiper-pagination-bullet", // Add custom class for bullets
-            bulletActiveClass: "swiper-pagination-bullet-active", // Active class for the bullet
-          }}
+          navigation={
+            isMobile
+              ? false
+              : {
+                  nextEl: ".custom-next",
+                  prevEl: ".custom-prev",
+                }
+          }
+          pagination={
+            isMobile
+              ? { type: "progressbar", el: ".swiper-progress-fill" }
+              : {
+                  clickable: true,
+                  type: "bullets",
+                  el: ".custom-pagination",
+                  bulletClass: "swiper-pagination-bullet",
+                  bulletActiveClass: "swiper-pagination-bullet-active",
+                }
+          }
           breakpoints={{
-            640: { slidesPerView: 1 },
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 4 },
+            420: { slidesPerView: 2, slidesPerGroup: 2 },
+            991: { slidesPerView: 3, slidesPerGroup: 3 },
+            1440: { slidesPerView: 4, slidesPerGroup: 4 },
           }}
         >
           {genres.map((genre) => (

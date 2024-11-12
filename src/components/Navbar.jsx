@@ -23,7 +23,7 @@ function Navbar() {
           aria-expanded='true'
           aria-label='Toggle navigation'
         >
-          <img src='/assets/menuIcon.png' alt='' />
+          <img src='/assets/MenuIcon.png' alt='menuIcon' />
         </button>
         <nav className='navbarNav collapse navbar-collapse' id='navbarNav'>
           <ul className='navbar-nav ms-auto'>
