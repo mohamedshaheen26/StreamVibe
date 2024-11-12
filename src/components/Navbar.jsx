@@ -1,13 +1,14 @@
 import React from "react";
 
+
 function Navbar() {
   return (
     <nav className='navbar navbar-expand-lg'>
       <div className='container'>
         <a className='navbar-brand' href='#'>
           <img
-            src='src/assets/Vector.png'
-            alt='Logo Stream'
+            src='/assets/StreamVibeLogo.png'
+            alt='Logo StreamVibe'
             width='30'
             height='30'
           />
@@ -22,7 +23,7 @@ function Navbar() {
           aria-expanded='true'
           aria-label='Toggle navigation'
         >
-          <img src='src/assets/menuIcon.png' alt='' />
+          <img src='/assets/menuIcon.png' alt='' />
         </button>
         <nav className='navbarNav collapse navbar-collapse' id='navbarNav'>
           <ul className='navbar-nav ms-auto'>

@@ -4,7 +4,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import useMovieGenres from "@/hooks/useMovieGenres";
 
 const CategoryCarousel = () => {
-  const { genres, moviesByGenre, isLoading, error } = useMovieGenres();
+  const { genres, topRatedByGenre, isLoading, error } = useMovieGenres();
 
   if (isLoading) {
     return <p>Loading categories...</p>;
@@ -57,24 +57,27 @@ const CategoryCarousel = () => {
             1024: { slidesPerView: 4 },
           }}
         >
-          {genres.map((category) => (
-            <SwiperSlide key={category.id}>
-              <div className='category-card'>
-                <div className='images-grid'>
-                  {moviesByGenre[category.id]?.map((poster, index) => (
+          {genres.map((genre) => (
+            <SwiperSlide key={genre.id}>
+              <div className='genre-section'>
+                <div className='poster-grid'>
+                  {topRatedByGenre[genre.id]?.map((posterPath, index) => (
                     <img
                       key={index}
                       src={
-                        poster
-                          ? `https://image.tmdb.org/t/p/w200${poster}`
+                        posterPath
+                          ? `https://image.tmdb.org/t/p/w200${posterPath}`
                           : "https://via.placeholder.com/200"
                       }
-                      alt={`${category.name} poster ${index + 1}`}
+                      alt={`Top-rated movie poster ${index + 1} for ${
+                        genre.name
+                      }`}
+                      className='poster-image'
                     />
                   ))}
                 </div>
                 <div className='swiper-footer'>
-                  <p>{category.name}</p>
+                  <p>{genre.name}</p>
                   <a href='#'>
                     <i className='fas fa-arrow-right'></i>
                   </a>
