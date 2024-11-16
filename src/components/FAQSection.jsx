@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CustomButton from "./CustomButton";
 
 const FAQSection = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -57,16 +58,14 @@ const FAQSection = () => {
     <section className='faq'>
       <div className='container'>
         <div className='d-flex flex-column align-items-end justify-content-between flex-xl-row'>
-          <div className='content-left mb-3 mb-xl-0'>
+          <div className='content-left mb-4 mb-xl-0'>
             <h2>Frequently Asked Questions</h2>
             <p>
               Got questions? We've got answers! Check out our FAQ section to
               find answers to the most common questions about StreamVibe.
             </p>
           </div>
-          <button className='btn btn-danger py-3 px-4 watch-btn'>
-            Ask a Question
-          </button>
+          <CustomButton className='custom-button' label='Ask a Question' />
         </div>
         <div className='accordion'>
           {" "}

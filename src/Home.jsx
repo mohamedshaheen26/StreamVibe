@@ -5,6 +5,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import Navbar from "./components/Navbar";
 import DeviceCompatibility from "./components/DeviceCompatibility";
 import FAQSection from "./components/FAQSection";
+import SubscriptionPlans from "./components/SubscriptionPlans";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       </ErrorBoundary>
       <DeviceCompatibility />
       <FAQSection />
+      <SubscriptionPlans />
     </>
   );
 }

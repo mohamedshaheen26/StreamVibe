@@ -10,7 +10,7 @@
   --border-red-outset: 10px;
   --border-red-inset: 8px;
   --padding-bottom: 100px;
-  --margin-top: 50px;
+  --margin-top: 80px;
   --transition-duration: 0.3s;
 }
 
@@ -40,6 +40,36 @@ p {
   font-size: var(--text-size);
 }
 
+.custom-button {
+  padding: 14px 20px;
+  font-size: var(--text-size);
+  border: none;
+  border-radius: var(--border-red-inset);
+  cursor: pointer;
+  background-color: var(--primary-color);
+}
+
+.custom-button:hover {
+  background-color: var(--hover-color);
+}
+
+@media (min-width: 1400px) {
+  .custom-button {
+    padding: 18px 24px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .card-body {
+    padding: 40px !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .card-body {
+    padding: 24px !important;
+  }
+}
 /* Navbar Styling */
 .navbar {
   height: 100px;
@@ -237,18 +267,6 @@ p {
   padding: 0 130px;
 }
 
-.watch-btn {
-  font-size: var(--text-size);
-  border: none;
-  border-radius: var(--border-red-inset);
-  cursor: pointer;
-  background-color: var(--primary-color);
-}
-
-.watch-btn:hover {
-  background-color: var(--hover-color);
-}
-
 @media (max-width: 1200px) {
   .hero-content .container {
     padding: 0;
@@ -305,6 +323,18 @@ p {
 
 .swiper {
   margin-top: var(--margin-top);
+}
+
+@media (max-width: 1200px) {
+  .swiper {
+    margin-top: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .swiper {
+    margin-top: 40px;
+  }
 }
 
 .swiper-slide {
@@ -440,6 +470,18 @@ p {
   margin-top: var(--margin-top);
 }
 
+@media (max-width: 1200px) {
+  .device-compatibility .cards {
+    margin-top: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .device-compatibility .cards {
+    margin-top: 40px;
+  }
+}
+
 .device-compatibility .card {
   border: none;
   border-radius: var(--border-red-outset);
@@ -454,7 +496,7 @@ p {
     rgba(229, 0, 0, 0.1) 0%,
     rgba(229, 0, 0, 0) 50%
   );
-  padding: 40px;
+  padding: 50px;
   transition: all var(--transition-duration) ease;
 }
 
@@ -534,6 +576,18 @@ p {
   margin-top: var(--margin-top);
 }
 
+@media (max-width: 1200px) {
+  .faq .accordion {
+    margin-top: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .faq .accordion {
+    margin-top: 40px;
+  }
+}
+
 .faq .faq-item {
   padding: 34px;
   color: white;
@@ -585,4 +639,83 @@ p {
 }
 .faq .faq-icon {
   font-size: 23px;
+}
+
+/* Subscription Plans Styling */
+.subscription-plans {
+  padding-bottom: var(--padding-bottom);
+}
+
+.subscription-plans h2 {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.subscription-plans .plan-tabs {
+  background-color: #0f0f0f;
+  padding: 10px;
+  border-radius: var(--border-red-outset);
+  box-shadow: 0 0 0 1px var(--shadow-color);
+}
+
+.subscription-plans .plan-tabs button {
+  padding: 14px 24px;
+  border: none;
+  border-radius: var(--border-red-inset);
+  color: var(--text-color);
+}
+
+.subscription-plans .plan-tabs button:hover,
+.subscription-plans .plan-tabs button.active {
+  color: white;
+  background-color: #1f1f1f;
+}
+
+.subscription-plans .plans {
+  margin-top: var(--margin-top);
+}
+
+@media (max-width: 1200px) {
+  .subscription-plans .plans {
+    margin-top: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .subscription-plans .plans {
+    margin-top: 40px;
+  }
+}
+
+.subscription-plans .plans .card {
+  border: none;
+  border-radius: 12px;
+}
+
+.subscription-plans .plans .card-body {
+  padding: 49px;
+  border-radius: 12px;
+  background-color: var(--bg-color-light);
+  box-shadow: 0 0 0 1px var(--shadow-color);
+}
+
+.subscription-plans .plans .card-title {
+  color: white;
+  margin-bottom: 16px;
+}
+
+.subscription-plans .plans .plan-price span:first-child {
+  color: white;
+  display: inline-block;
+  margin: 20px 0;
+  font-size: 40px;
+}
+
+.subscription-plans .free-trial {
+  background-color: var(--bg-color);
+}
+
+.subscription-plans .free-trial:hover,
+.subscription-plans .free-trial:active {
+  background-color: #262626;
 }
