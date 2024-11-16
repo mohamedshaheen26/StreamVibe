@@ -455,6 +455,56 @@ p {
     rgba(229, 0, 0, 0) 50%
   );
   padding: 40px;
+  transition: all var(--transition-duration) ease;
+}
+
+.device-compatibility .card-body:hover {
+  animation: animateCard var(--transition-duration) ease-in-out forwards;
+}
+
+@keyframes animateCard {
+  0% {
+    background: linear-gradient(
+      215deg,
+      rgba(229, 0, 0, 0.1) 0%,
+      rgba(229, 0, 0, 0) 50%
+    );
+  }
+  20% {
+    background: linear-gradient(
+      150deg,
+      rgba(229, 0, 0, 0.1) 0%,
+      rgba(229, 0, 0, 0) 50%
+    );
+  }
+  40% {
+    background: linear-gradient(
+      70deg,
+      rgba(229, 0, 0, 0.1) 0%,
+      rgba(229, 0, 0, 0) 50%
+    );
+  }
+  60% {
+    background: linear-gradient(
+      45deg,
+      rgba(229, 0, 0, 0.1) 0%,
+      rgba(229, 0, 0, 0) 50%
+    );
+  }
+  80% {
+    background: linear-gradient(
+      10deg,
+      rgba(229, 0, 0, 0.1) 0%,
+      rgba(229, 0, 0, 0) 50%
+    );
+  }
+  100% {
+    background: linear-gradient(
+      215deg,
+      rgba(229, 0, 0, 0.1) 0%,
+      rgba(229, 0, 0, 0) 50%
+    );
+  }
 }
 
 .device-compatibility .card-icon {
@@ -468,4 +518,71 @@ p {
 .device-compatibility .card-text {
   margin-top: 24px;
   font-size: 16px;
+}
+
+/* FAQ Styling */
+.faq {
+  padding-bottom: var(--padding-bottom);
+}
+
+.faq h2 {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.faq .accordion {
+  margin-top: var(--margin-top);
+}
+
+.faq .faq-item {
+  padding: 34px;
+  color: white;
+}
+
+@media (max-width: 991px) {
+  .faq .faq-item {
+    padding: 20px 10px;
+  }
+  .faq .faq-item:not(:last-of-type) {
+    margin-bottom: 20px;
+  }
+}
+
+.faq .faq-item:not(:last-of-type) {
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(
+    to right,
+    rgba(229, 0, 0, 0) 0%,
+    rgba(229, 0, 0, 1) 17%,
+    rgba(229, 0, 0, 0) 100%
+  );
+  border-image-slice: 1;
+}
+
+@media (max-width: 991px) {
+  .faq .accordion .col-lg-6:first-child .faq-item:nth-child(4) {
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(
+      to right,
+      rgba(229, 0, 0, 0) 0%,
+      rgba(229, 0, 0, 1) 17%,
+      rgba(229, 0, 0, 0) 100%
+    );
+    border-image-slice: 1;
+  }
+}
+
+.faq-item .faq-number {
+  padding: 20px;
+  background-color: var(--shadow-color);
+  border-radius: var(--border-red-outset);
+  margin-right: 20px;
+  font-size: 20px;
+}
+
+.faq .faq-item .faq-content {
+  flex: 1;
+}
+.faq .faq-icon {
+  font-size: 23px;
 }

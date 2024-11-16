@@ -4,6 +4,7 @@ import CategoryCarousel from "./components/CategoryCarousel";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Navbar from "./components/Navbar";
 import DeviceCompatibility from "./components/DeviceCompatibility";
+import FAQSection from "./components/FAQSection";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <CategoryCarousel />
       </ErrorBoundary>
       <DeviceCompatibility />
+      <FAQSection />
     </>
   );
 }
