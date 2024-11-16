@@ -9,6 +9,8 @@
   --shadow-color: #1f1f1f;
   --border-red-outset: 10px;
   --border-red-inset: 8px;
+  --padding-bottom: 100px;
+  --margin-top: 50px;
   --transition-duration: 0.3s;
 }
 
@@ -228,7 +230,7 @@ p {
   position: relative;
   top: -70px;
   z-index: 9999;
-  padding-bottom: 80px;
+  padding-bottom: var(--padding-bottom);
 }
 
 .hero-content .container {
@@ -257,6 +259,10 @@ p {
 }
 
 /* Movie Grid Styling */
+.category-carousel {
+  padding-bottom: var(--padding-bottom);
+}
+
 .category-carousel .container {
   position: relative;
 }
@@ -298,7 +304,7 @@ p {
 }
 
 .swiper {
-  margin-top: 50px;
+  margin-top: var(--margin-top);
 }
 
 .swiper-slide {
@@ -407,4 +413,59 @@ p {
   transition: var(--transition-duration);
 }
 
-/**/
+/* Device Compatibility Styling */
+.device-compatibility {
+  padding-bottom: var(--padding-bottom);
+}
+
+.device-compatibility h2 {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.device-compatibility > .container > p:first-of-type {
+  padding-right: 90px;
+}
+
+@media (max-width: 767px) {
+  .device-compatibility h2 {
+    font-size: 40px;
+  }
+  .device-compatibility > .container > p:first-of-type {
+    padding-right: 0;
+  }
+}
+
+.device-compatibility .cards {
+  margin-top: var(--margin-top);
+}
+
+.device-compatibility .card {
+  border: none;
+  border-radius: var(--border-red-outset);
+  box-shadow: 0 0 0 1px var(--shadow-color);
+}
+
+.device-compatibility .card-body {
+  border-radius: var(--border-red-outset);
+  background-color: #0f0f0f !important;
+  background: linear-gradient(
+    215deg,
+    rgba(229, 0, 0, 0.1) 0%,
+    rgba(229, 0, 0, 0) 50%
+  );
+  padding: 40px;
+}
+
+.device-compatibility .card-icon {
+  padding: 12px;
+  border-radius: var(--border-red-outset);
+  background-color: var(--bg-color);
+  box-shadow: 0 0 0 1px var(--shadow-color);
+  margin-right: 12px;
+}
+
+.device-compatibility .card-text {
+  margin-top: 24px;
+  font-size: 16px;
+}

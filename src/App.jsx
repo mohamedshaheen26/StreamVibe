@@ -1,16 +1,12 @@
 import React from "react";
-import HeroSection from "./components/HeroSection";
-import CategoryCarousel from "./components/CategoryCarousel";
-import ErrorBoundary from "./components/ErrorBoundary";
 import "./index.css";
+
+import Home from "./Home.jsx";
 
 function App() {
   return (
     <div className='App'>
-      <HeroSection />
-      <ErrorBoundary>
-        <CategoryCarousel />
-      </ErrorBoundary>
+      <Home />
     </div>
   );
 }

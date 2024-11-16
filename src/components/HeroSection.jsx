@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import usePopularMovies from "@/hooks/usePopularMovies";
-import Navbar from "./Navbar.jsx";
 import useResposiveScreen from "../hooks/useResposiveScreen.js";
 
 function HeroSection() {
@@ -17,7 +16,6 @@ function HeroSection() {
   return (
     <>
       <section className='hero-section'>
-        <Navbar />
         <div className='mosaic-background'>
           {images.map((url, index) => (
             <div key={index} className='mosaic-image'>
