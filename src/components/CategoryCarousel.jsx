@@ -21,7 +21,7 @@ const CategoryCarousel = () => {
   }
 
   return (
-    <div className='category-carousel' id="category-carousel">
+    <div className='category-carousel' id='category-carousel'>
       <div className='container'>
         <h2>Explore our wide variety of categories</h2>
         <p>
@@ -35,12 +35,12 @@ const CategoryCarousel = () => {
             <div className='swiper-progress-fill'></div>
           </div>
         ) : (
-          <div className='swiper-control'>
-            <div className='custom-prev'>
+          <div className='swiper-control d-flex align-items-center'>
+            <div className='custom-prev p-3 d-flex align-items-center justify-content-center'>
               <i className='fas fa-arrow-left'></i>
             </div>
             <div className='custom-pagination'></div>
-            <div className='custom-next'>
+            <div className='custom-next p-3 d-flex align-items-center justify-content-center'>
               <i className='fas fa-arrow-right'></i>
             </div>
           </div>

@@ -14,7 +14,6 @@ class ErrorBoundary extends Component {
 
   componentDidCatch(error, info) {
     this.setState({ errorMessage: error.message });
-    // Optionally, log the error to an external service, like Sentry
     console.error("Error caught by Error Boundary:", error, info);
   }
 

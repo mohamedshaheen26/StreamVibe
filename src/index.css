@@ -1,3 +1,17 @@
+:root {
+  --primary-color: #e50000;
+  --secondary-color: #262626;
+  --hover-color: #d51515;
+  --text-color: #999999;
+  --text-size: 18px;
+  --bg-color: #141414;
+  --bg-color-light: #1a1a1a;
+  --shadow-color: #1f1f1f;
+  --border-red-outset: 10px;
+  --border-red-inset: 8px;
+  --transition-duration: 0.3s;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -5,7 +19,7 @@
 }
 
 body {
-  background-color: #141414;
+  background-color: var(--bg-color);
   height: 12000px;
 }
 
@@ -19,6 +33,11 @@ p {
   margin: 0;
 }
 
+p {
+  color: var(--text-color);
+  font-size: var(--text-size);
+}
+
 /* Navbar Styling */
 .navbar {
   height: 100px;
@@ -27,14 +46,13 @@ p {
   left: 0;
   right: 0;
   z-index: 99999;
-  transition: 0.3s cubic-bezier(0, 0.54, 1, 1);
+  transition: var(--transition-duration) cubic-bezier(0, 0.54, 1, 1);
 }
 
 .navbar.scrolled {
-  /* box-shadow: 1px 1px 10px rgba(194, 194, 194, 0.1); */
   background: linear-gradient(
     to bottom,
-    rgba(20, 20, 20, .9) 100%,
+    rgba(20, 20, 20, 0.9) 100%,
     rgba(20, 20, 20, 0.3) 0%
   );
   height: 75px;
@@ -49,11 +67,11 @@ p {
   display: flex;
   align-items: center;
   gap: 7px;
-  transition: 0.3s;
+  transition: var(--transition-duration);
 }
 
 .navbar-brand:hover {
-  color: #e50000;
+  color: var(--hover-color);
 }
 
 @media (min-width: 991px) {
@@ -70,20 +88,20 @@ p {
 
 .navbar-toggler {
   padding: 12px;
-  background-color: #1a1a1a;
-  box-shadow: 0 0 0 3px #1f1f1f;
+  background-color: var(--bg-color-light);
+  box-shadow: 0 0 0 3px var(--shadow-color);
   border: none;
 }
 
 .navbar-toggler:active,
 .navbar-toggler:focus,
 .navbar-toggler:active:focus {
-  box-shadow: 0 0 0 3px #1f1f1f;
+  box-shadow: 0 0 0 3px var(--shadow-color);
 }
 
 .navbarNav {
-  box-shadow: 0 0 0 4px #1f1f1f;
-  border-radius: 12px;
+  box-shadow: 0 0 0 4px var(--shadow-color);
+  border-radius: var(--border-red-outset);
   background-color: rgba(15, 15, 15, 0.9);
   opacity: 100%;
 }
@@ -101,31 +119,31 @@ p {
 .navbar-nav .nav-link.active,
 .navbar-nav .nav-link.show,
 .navbar-nav .nav-link:hover {
-  border-radius: 6px;
-  background-color: #1a1a1a;
+  border-radius: var(--border-red-inset);
+  background-color: var(--bg-color-light);
   color: white;
 }
 
-.navbar-text {
+.navbar-icon {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
 @media (max-width: 991px) {
-  .navbar-text {
+  .navbar-icon {
     display: none;
   }
 }
 
-.navbar-text a {
+.navbar-icon a {
   font-size: 20px;
   color: white;
-  transition: 0.3s;
+  transition: var(--transition-duration);
 }
 
-.navbar-text a:hover {
-  color: #e50000;
+.navbar-icon a:hover {
+  color: var(--hover-color);
 }
 /* Hero Section Styling */
 .mosaic-background {
@@ -175,9 +193,9 @@ p {
   );
 }
 
-.mosaic-image {
+.mosaic-image img {
   height: 200px;
-  border-radius: 12px;
+  border-radius: var(--border-red-inset);
 }
 
 .mosaic-image img {
@@ -217,33 +235,16 @@ p {
   padding: 0 130px;
 }
 
-.hero-content h1 {
-  font-size: 58px;
-  font-weight: bold;
-}
-
-.hero-content p {
-  font-size: 18px;
-  margin: 20px auto;
-  line-height: 150%;
-  color: #999999;
-}
-
 .watch-btn {
-  padding: 18px 24px;
-  font-size: 18px;
+  font-size: var(--text-size);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--border-red-inset);
   cursor: pointer;
-  background-color: #e50000;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin-inline: auto;
+  background-color: var(--primary-color);
 }
 
 .watch-btn:hover {
-  background-color: #d51515;
+  background-color: var(--hover-color);
 }
 
 @media (max-width: 1200px) {
@@ -265,36 +266,25 @@ p {
   margin-bottom: 10px;
 }
 
-.category-carousel p {
-  color: #999999;
-}
-
 .swiper-control {
-  margin-bottom: 50px;
   padding: 12px;
   background-color: #0f0f0f;
-  display: flex;
-  align-items: center;
   position: absolute;
   right: 30px;
   top: -20px;
-  border-radius: 10px;
+  border-radius: var(--border-red-outset);
 }
 
 .swiper-control .custom-prev,
 .swiper-control .custom-next {
   width: 44px;
   height: 44px;
-  background-color: #262626; /* Transparent black background */
+  background-color: var(--secondary-color);
   color: white;
-  font-size: 18px;
-  padding: 14px;
-  border-radius: 8px;
+  font-size: var(--text-size);
+  border-radius: var(--border-red-inset);
   cursor: pointer;
   z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .swiper-button-disabled {
@@ -312,24 +302,28 @@ p {
 }
 
 .swiper-slide {
-  background-color: #1a1a1a;
-  border-radius: 12px;
+  background-color: var(--bg-color-light);
+  border-radius: var(--border-red-outset);
   padding: 20px;
+  cursor: pointer;
+}
+
+.swiper-slide:hover a {
+  color: var(--hover-color);
 }
 
 .custom-pagination {
   margin: 0 12px 10px;
 }
 
-/* Default style for custom bullets */
 .swiper-pagination-bullet {
   display: inline-block;
   margin: 0 5px;
   width: 14px;
   height: 4px;
-  border-radius: 20px;
+  border-radius: var(--border-red-inset);
   background-color: #ccc;
-  transition: all 0.3s ease;
+  transition: all var(--transition-duration) ease;
 }
 
 .swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
@@ -338,13 +332,12 @@ p {
   margin: 0 2px;
 }
 
-/* Active bullet style */
 .swiper-pagination-bullet-active {
-  width: 18px;
-  background-color: #e50000; /* Active bullet color */
+  width: var(--text-size);
+  background-color: var(--primary-color);
 }
 
-/* Container for the progress bar */
+/* progress bar */
 .swiper-progress-bar {
   position: absolute;
   bottom: -30px;
@@ -353,35 +346,24 @@ p {
   background-color: #333333;
   transform: translateX(-50%);
   left: 50%;
-  border-radius: 20px;
+  border-radius: var(--border-red-outset);
+  overflow: hidden;
 }
 
 .swiper-progress-fill {
   height: 100%;
   width: 0%;
-  transition: width 0.3s ease;
+  transition: width var(--transition-duration) ease;
 }
 
 .swiper-pagination-progressbar-fill {
-  border-radius: 20px;
-  background-color: #e50000 !important;
-}
-
-/* Custom styles for non-default bullet (e.g., change to custom shapes or images) */
-.custom-bullet {
-  background-color: #3498db; /* Custom bullet color */
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  font-size: 18px;
-  text-align: center;
-  line-height: 18px;
-  color: white;
+  border-radius: var(--border-red-inset);
+  background-color: var(--primary-color) !important;
 }
 
 .poster-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Always show 2 columns */
+  grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto;
   gap: 10px;
   position: relative;
@@ -404,7 +386,7 @@ p {
 .poster-grid img {
   width: 100%;
   height: 150px;
-  border-radius: 8px;
+  border-radius: var(--border-red-inset);
 }
 
 .swiper-footer {
@@ -420,11 +402,9 @@ p {
 }
 
 .swiper-footer a {
-  font-size: 18px;
+  font-size: var(--text-size);
   color: white;
-  transition: 0.3s;
+  transition: var(--transition-duration);
 }
 
-.swiper-footer a:hover {
-  color: #d51515;
-}
+/**/

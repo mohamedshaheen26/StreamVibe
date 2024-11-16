@@ -28,10 +28,10 @@ function HeroSection() {
         <div className='hero-overlay'></div>
       </section>
       <section className='hero-content'>
-        <div className='container'>
-          <h1>The Best Streaming Experience</h1>
-          <p>{isMobile ? shortText : fullText}</p>
-          <button className='btn btn-danger watch-btn'>
+        <div className='container text-center text-white'>
+          <h1 class='display-4 fw-bold'>The Best Streaming Experience</h1>
+          <p class='my-3'>{isMobile ? shortText : fullText}</p>
+          <button className='btn btn-danger py-3 px-4 d-flex align-items-center gap-2  mx-auto watch-btn'>
             <i className='fas fa-play'></i>
             Start Watching Now
           </button>

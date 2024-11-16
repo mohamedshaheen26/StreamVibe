@@ -45,7 +45,7 @@ function Navbar() {
           <img src='/assets/MenuIcon.png' alt='menuIcon' />
         </button>
         <nav className='navbarNav collapse navbar-collapse' id='navbarNav'>
-          <ul className='navbar-nav ms-auto'>
+          <ul className='navbar-nav ms-auto p-2'>
             <li className='nav-item'>
               <a className='nav-link active' aria-current='page' href='#'>
                 Home
@@ -68,7 +68,7 @@ function Navbar() {
             </li>
           </ul>
         </nav>
-        <span className='navbar-text'>
+        <span className='navbar-icon'>
           <a href='#'>
             <i className='fas fa-search'></i>
           </a>
