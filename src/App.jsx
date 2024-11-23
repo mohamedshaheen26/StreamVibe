@@ -7,6 +7,7 @@ import Footer from "./components/Footer.jsx";
 
 import Home from "./pages/Home.jsx";
 import Support from "./pages/Support.jsx";
+import Subscriptions from "./pages/Subscriptions.jsx";
 
 import StreamVibeLoader from "./components/StreamVibeLoader";
 import FreeTrial from "./components/FreeTrial.jsx";
@@ -46,7 +47,7 @@ const App = () => {
               }
             />
             <Route path='/support' element={<Support />} />
-            <Route path='/subscriptions' element={<div></div>} />
+            <Route path='/subscriptions' element={<Subscriptions />} />
           </Routes>
         </main>
         <FreeTrial />

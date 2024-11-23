@@ -1165,3 +1165,29 @@ footer .footer-bottom-links li:not(:last-child) {
 .material-checkbox input[type="checkbox"]:disabled ~ .checkmark:hover {
   border-color: var(--primary-color);
 }
+
+/* Subscription Page Styling */
+main > .subscription-plans:first-child {
+  padding-top: 200px;
+}
+
+.subscriptions {
+  padding-bottom: var(--padding-bottom);
+}
+
+.subscriptions table {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 1px var(--shadow-color);
+}
+
+.subscriptions table thead th {
+  padding: 30px;
+  background-color: #0f0f0f;
+  color: white;
+}
+
+.subscriptions table tbody td {
+  color: var(--text-color);
+  padding: 30px;
+  background-color: transparent;
+}
