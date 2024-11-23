@@ -70,7 +70,7 @@ const SubscriptionPlans = () => {
                   </p>
                   <div className='buttons d-flex align-items-center justify-content-between'>
                     <CustomButton
-                      className='custom-button free-trial'
+                      className='custom-button free-trial-btn'
                       label='Start Free Trial'
                     />
                     <CustomButton
