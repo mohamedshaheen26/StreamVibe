@@ -4,7 +4,7 @@ import useResposiveScreen from "../hooks/useResposiveScreen.js";
 import CustomButton from "./CustomButton.jsx";
 
 function HeroSection() {
-  const images = usePopularMovies();
+  const images = usePopularMovies().slice(0, 36);
 
   const isMobile = useResposiveScreen();
 

@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import "./index.css";
+import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer.jsx";
+
 import Home from "./pages/Home.jsx";
+import Support from "./pages/Support.jsx";
+
 import StreamVibeLoader from "./components/StreamVibeLoader";
+import FreeTrial from "./components/FreeTrial.jsx";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -17,9 +25,23 @@ const App = () => {
   }
 
   return (
-    <div className='App'>
-      <Home />
-    </div>
+    <Router>
+      <div className='App'>
+        <Navbar />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          {/* Add future pages here */}
+          <Route path='/movies' element={<Support />} />
+          <Route path='/support' element={<Support />} />
+          <Route
+            path='/subscriptions'
+            element={<div>Subscriptions Page</div>}
+          />
+        </Routes>
+        <FreeTrial />
+        <Footer />
+      </div>
+    </Router>
   );
 };
 

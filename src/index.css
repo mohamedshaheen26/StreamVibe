@@ -127,7 +127,9 @@ a {
   background-color: var(--primary-color);
 }
 
-.custom-button:hover {
+.custom-button:hover,
+.custom-button:focus,
+.custom-button:focus:active {
   background-color: var(--hover-color);
 }
 
@@ -937,4 +939,178 @@ footer .footer-bottom-links li:not(:last-child) {
 
 .footer .footer-bottom-links li {
   margin-bottom: 0 !important;
+}
+
+/* Support styling */
+.support {
+  padding-top: 200px;
+  padding-bottom: var(--padding-bottom);
+}
+
+@media (max-width: 991px) {
+  .support {
+    padding-top: 120px;
+  }
+}
+
+.support .support-imgs {
+  position: relative;
+  height: 477px;
+  overflow: hidden;
+  box-shadow: 0 0 0 6px var(--shadow-color);
+  border-radius: var(--border-red-inset);
+}
+
+@media (max-width: 991px) {
+  .support .support-imgs  {
+    height: 344px;
+  }
+}
+
+
+.support .support-imgs .mosaic-background {
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 110%;
+  height: 110%;
+  grid-template-columns: repeat(auto-fill, minmax(88px, auto));
+}
+
+.support .support-imgs .mosaic-background::before,
+.support .support-imgs .mosaic-background::after {
+  content: none;
+}
+
+.support .support-imgs .mosaic-background .mosaic-image {
+  height: 120px;
+  border-radius: var(--border-red-outset);
+}
+
+.support-form {
+  padding: 50px;
+  background-color: #0f0f0f;
+  border-radius: var(--border-red-outset);
+  box-shadow: 0 0 0 1px var(--shadow-color);
+}
+
+@media (max-width: 991px) {
+  .support-form {
+    padding: 24px;
+  }
+}
+
+.support-form .form-label {
+  color: white;
+  margin-bottom: 16px;
+}
+
+.support-form .form-control,
+.PhoneInput input {
+  padding: 20px;
+  border-radius: var(--border-red-inset);
+  background-color: var(--bg-color);
+  box-shadow: 0 0 0 1px var(--shadow-color);
+  border: none;
+  color: var(--text-color);
+}
+
+.support-form .form-control::placeholder {
+  color: var(--text-color);
+}
+
+.PhoneInputCountry {
+  padding: 0 12px;
+  margin-right: 15px !important;
+  border-radius: var(--border-red-inset);
+  background-color: var(--bg-color);
+  box-shadow: 0 0 0 1px var(--shadow-color);
+}
+
+.PhoneInputCountryIcon--border {
+  margin-right: 6px;
+}
+
+.PhoneInputCountrySelectArrow {
+  width: 0.7em !important;
+  height: 0.7em !important;
+  border-bottom-width: 3px !important;
+  border-right-width: 3px !important;
+}
+
+.PhoneInputCountrySelect
+  + .PhoneInputCountryIcon
+  + .PhoneInputCountrySelectArrow {
+  color: var(--text-color) !important;
+  opacity: 1 !important;
+}
+
+.PhoneInputCountrySelect:focus + .PhoneInputCountryIcon--border {
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .support .custom-button {
+    width: 100%;
+  }
+}
+
+.material-checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.material-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkmark {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  border: 1px solid #262626;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.material-checkbox input[type="checkbox"]:checked ~ .checkmark {
+  background-color: var(--secondary-color);
+  border-color: var(--primary-color);
+}
+
+.material-checkbox input[type="checkbox"]:checked ~ .checkmark:after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 7px;
+  width: 5px;
+  height: 10px;
+  border: solid var(--primary-color);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.material-checkbox input[type="checkbox"]:focus ~ .checkmark {
+  box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.material-checkbox:hover input[type="checkbox"] ~ .checkmark {
+  border-color: var(--primary-color);
+}
+
+.material-checkbox input[type="checkbox"]:disabled ~ .checkmark {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.material-checkbox input[type="checkbox"]:disabled ~ .checkmark:hover {
+  border-color: var(--primary-color);
 }

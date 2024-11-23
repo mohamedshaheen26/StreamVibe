@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom"; // Import NavLink
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -47,24 +48,24 @@ function Navbar() {
         <nav className='navbarNav collapse navbar-collapse' id='navbarNav'>
           <ul className='navbar-nav ms-auto p-2'>
             <li className='nav-item'>
-              <a className='nav-link active' aria-current='page' href='#'>
+              <NavLink className='nav-link' to='/'>
                 Home
-              </a>
+              </NavLink>
             </li>
             <li className='nav-item'>
-              <a className='nav-link' href='#'>
+              <NavLink className='nav-link' to='/movies'>
                 Movies & Shows
-              </a>
+              </NavLink>
             </li>
             <li className='nav-item'>
-              <a className='nav-link' href='#'>
+              <NavLink className='nav-link' to='/support'>
                 Support
-              </a>
+              </NavLink>
             </li>
             <li className='nav-item'>
-              <a className='nav-link' href='#'>
+              <NavLink className='nav-link' to='/subscriptions'>
                 Subscriptions
-              </a>
+              </NavLink>
             </li>
           </ul>
         </nav>

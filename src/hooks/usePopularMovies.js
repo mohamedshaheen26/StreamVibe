@@ -27,7 +27,7 @@ function usePopularMovies() {
           allPosters = [...allPosters, ...posterUrls];
         }
 
-        setImages(allPosters.slice(0, 36)); // Limit to 36 posters
+        setImages(allPosters); // Limit to 36 posters
       } catch (error) {
         console.error("Error fetching popular movies:", err);
         setError("Failed to load popular movies.");
