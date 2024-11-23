@@ -3,14 +3,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import useMovieGenres from "@/hooks/useMovieGenres";
 import useResposiveScreen from "../hooks/useResposiveScreen.js";
+import { ThreeDots } from "react-loader-spinner";
 
 const CategoryCarousel = () => {
   const { genres, topRatedByGenre, isLoading, error } = useMovieGenres();
   const isMobile = useResposiveScreen();
-
-  if (isLoading) {
-    return <p>Loading categories...</p>;
-  }
 
   if (error) {
     return <p>Error loading categories: {error.message}</p>;
@@ -46,63 +43,76 @@ const CategoryCarousel = () => {
           </div>
         )}
 
-        <Swiper
-          modules={[Navigation, Pagination]}
-          spaceBetween={20}
-          navigation={
-            isMobile
-              ? false
-              : {
-                  nextEl: ".custom-next",
-                  prevEl: ".custom-prev",
-                }
-          }
-          pagination={
-            isMobile
-              ? { type: "progressbar", el: ".swiper-progress-fill" }
-              : {
-                  clickable: true,
-                  type: "bullets",
-                  el: ".custom-pagination",
-                  bulletClass: "swiper-pagination-bullet",
-                  bulletActiveClass: "swiper-pagination-bullet-active",
-                }
-          }
-          breakpoints={{
-            420: { slidesPerView: 2, slidesPerGroup: 2 },
-            991: { slidesPerView: 3, slidesPerGroup: 3 },
-            1440: { slidesPerView: 4, slidesPerGroup: 4 },
-          }}
-        >
-          {genres.map((genre) => (
-            <SwiperSlide key={genre.id}>
-              <div className='genre-section'>
-                <div className='poster-grid'>
-                  {topRatedByGenre[genre.id]?.map((posterPath, index) => (
-                    <img
-                      key={index}
-                      src={
-                        posterPath
-                          ? `https://image.tmdb.org/t/p/w200${posterPath}`
-                          : "https://via.placeholder.com/200"
-                      }
-                      alt={`Top-rated movie poster ${index + 1} for ${
-                        genre.name
-                      }`}
-                      className='poster-image'
-                    />
-                  ))}
+        {isLoading ? (
+          <ThreeDots
+            visible={true}
+            height='80'
+            width='80'
+            color='#e50000'
+            radius='9'
+            ariaLabel='three-dots-loading'
+            wrapperStyle={{}}
+            wrapperClass=''
+          />
+        ) : (
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={20}
+            navigation={
+              isMobile
+                ? false
+                : {
+                    nextEl: ".custom-next",
+                    prevEl: ".custom-prev",
+                  }
+            }
+            pagination={
+              isMobile
+                ? { type: "progressbar", el: ".swiper-progress-fill" }
+                : {
+                    clickable: true,
+                    type: "bullets",
+                    el: ".custom-pagination",
+                    bulletClass: "swiper-pagination-bullet",
+                    bulletActiveClass: "swiper-pagination-bullet-active",
+                  }
+            }
+            breakpoints={{
+              420: { slidesPerView: 2, slidesPerGroup: 2 },
+              991: { slidesPerView: 3, slidesPerGroup: 3 },
+              1440: { slidesPerView: 4, slidesPerGroup: 4 },
+            }}
+          >
+            {genres.map((genre) => (
+              <SwiperSlide key={genre.id}>
+                <div className='genre-section'>
+                  <div className='poster-grid'>
+                    {topRatedByGenre[genre.id]?.map((posterPath, index) => (
+                      <img
+                        key={index}
+                        src={
+                          posterPath
+                            ? `https://image.tmdb.org/t/p/w200${posterPath}`
+                            : "https://via.placeholder.com/200"
+                        }
+                        alt={`Top-rated movie poster ${index + 1} for ${
+                          genre.name
+                        }`}
+                        className='poster-image'
+                      />
+                    ))}
+                  </div>
+                  <div className='swiper-footer'>
+                    <p>{genre.name}</p>
+                    <a href='#'>
+                      <i className='fas fa-arrow-right'></i>
+                    </a>
+                  </div>
                 </div>
-                <div className='swiper-footer'>
-                  <p>{genre.name}</p>
-                  <a href='#'>
-                    <i className='fas fa-arrow-right'></i>
-                  </a>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </div>
     </section>
   );
