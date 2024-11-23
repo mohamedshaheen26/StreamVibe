@@ -6,7 +6,7 @@ const FreeTrial = () => {
   const images = usePopularMovies();
 
   return (
-    <div className='container'>
+    <div className='container free-trial-section'>
       <section className='free-trial'>
         <div className='mosaic-background'>
           {images.map((url, index) => (

@@ -21,6 +21,7 @@ function App() {
       <FAQSection />
       <SubscriptionPlans />
       <FreeTrial />
+      <Footer />
     </>
   );
 }
