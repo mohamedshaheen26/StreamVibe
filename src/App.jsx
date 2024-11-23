@@ -10,6 +10,7 @@ import Support from "./pages/Support.jsx";
 
 import StreamVibeLoader from "./components/StreamVibeLoader";
 import FreeTrial from "./components/FreeTrial.jsx";
+import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -28,16 +29,26 @@ const App = () => {
     <Router>
       <div className='App'>
         <Navbar />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          {/* Add future pages here */}
-          <Route path='/movies' element={<Support />} />
-          <Route path='/support' element={<Support />} />
-          <Route
-            path='/subscriptions'
-            element={<div>Subscriptions Page</div>}
-          />
-        </Routes>
+        <ScrollToTop />
+        <main>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            {/* Add future pages here */}
+            <Route
+              path='/movies'
+              element={
+                <div
+                  className='text-center'
+                  style={{ padding: " 100px", fontSize: "100px" }}
+                >
+                  Coming Soon!
+                </div>
+              }
+            />
+            <Route path='/support' element={<Support />} />
+            <Route path='/subscriptions' element={<div></div>} />
+          </Routes>
+        </main>
         <FreeTrial />
         <Footer />
       </div>

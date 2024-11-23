@@ -49,6 +49,26 @@ a {
   text-decoration: none;
 }
 
+/* Custom Scrollbar */
+*::-webkit-scrollbar {
+  width: 4px;
+  height: 8px;
+  background-color: var(--secondary-color);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: var(--secondary-color);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--hover-color);
+}
+
 /* Loader Wrapper */
 .stream-vibe-loader {
   position: fixed;
@@ -118,6 +138,7 @@ a {
 
 /* End of Loader Wrapper */
 
+/* Custom Button Styling */
 .custom-button {
   padding: 14px 20px;
   font-size: var(--text-size);
@@ -150,6 +171,37 @@ a {
     padding: 24px !important;
   }
 }
+
+/* Scroll to Top Button Styling */
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary-color);
+  border-radius: 50px;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scroll-to-top:hover {
+  background-color: var(--hover-color);
+}
+
 /* Navbar Styling */
 .navbar {
   height: 100px;
@@ -962,11 +1014,10 @@ footer .footer-bottom-links li:not(:last-child) {
 }
 
 @media (max-width: 991px) {
-  .support .support-imgs  {
+  .support .support-imgs {
     height: 344px;
   }
 }
-
 
 .support .support-imgs .mosaic-background {
   position: absolute;

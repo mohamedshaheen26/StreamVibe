@@ -164,9 +164,9 @@ const Support = () => {
                 </div>
                 <div className='row align-items-center'>
                   <div className='col-md-8 mb-4 mb-md-0'>
-                    <label class='material-checkbox'>
+                    <label className='material-checkbox'>
                       <input type='checkbox' />
-                      <span class='checkmark'></span>I agree with Terms of Use
+                      <span className='checkmark'></span>I agree with Terms of Use
                       and Privacy Policy
                     </label>
                   </div>
