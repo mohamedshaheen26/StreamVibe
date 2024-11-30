@@ -103,7 +103,7 @@ const Footer = () => {
                 &copy; 2023 StreamVibe. All rights reserved.
               </p>
             </div>
-            <div className='col-12 col-lg-6 col-xl-5'>
+            <div className='col-12 col-lg-6 col-xl-5 mb-4'>
               <ul className='footer-bottom-links d-flex align-content-center float-lg-end'>
                 <li>
                   <a href='#'>Terms of Use</a>
@@ -115,6 +115,19 @@ const Footer = () => {
                   <a href='#'>Cookie Policy</a>
                 </li>
               </ul>
+            </div>
+            <div className='col-12'>
+              <p className='copyright text-center'>
+                Developed by{" "}
+                <strong>
+                  <a
+                    href='https://www.linkedin.com/in/mohamed-shaheen-208718234'
+                    target='_blank'
+                  >
+                    Mohamed Shaheen
+                  </a>
+                </strong>
+              </p>
             </div>
           </div>
         </div>

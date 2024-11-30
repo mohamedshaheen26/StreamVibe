@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CustomButton from "./CustomButton";
-
+import ToggleTabs from "./ToggleTabs";
 const plans = [
   {
     title: "Basic Plan",
@@ -26,7 +26,9 @@ const plans = [
 ];
 
 const SubscriptionPlans = () => {
-  const [isYearly, setIsYearly] = useState(false);
+  const [activePlan, setActivePlan] = useState("Yearly");
+
+  const planNames = ["Monthly", "Yearly"];
 
   return (
     <section className='subscription-plans'>
@@ -40,20 +42,11 @@ const SubscriptionPlans = () => {
               entertainment!
             </p>
           </div>
-          <div className='plan-tabs d-flex justify-content-center'>
-            <button
-              className={`btn ${!isYearly ? "active" : ""} me-2`}
-              onClick={() => setIsYearly(false)}
-            >
-              Monthly
-            </button>
-            <button
-              className={`btn ${isYearly ? "active" : ""}`}
-              onClick={() => setIsYearly(true)}
-            >
-              Yearly
-            </button>
-          </div>
+          <ToggleTabs
+            tabs={planNames}
+            activeTab={activePlan}
+            onTabChange={(selectedTab) => setActivePlan(selectedTab)}
+          />
         </div>
         <div className='plans row row-cols-1 row-cols-md-2 row-cols-lg-3 align-items-stretch g-4'>
           {plans.map((plan, index) => (
@@ -64,9 +57,9 @@ const SubscriptionPlans = () => {
                   <p className='card-text'>{plan.features}</p>
                   <p className='plan-price'>
                     <span>
-                      {isYearly ? plan.yearlyPrice : plan.monthlyPrice}
+                      {activePlan ? plan.yearlyPrice : plan.monthlyPrice}
                     </span>
-                    <span>{isYearly ? "/ year" : "/ month"}</span>
+                    <span>{activePlan ? "/ year" : "/ month"}</span>
                   </p>
                   <div className='buttons d-flex align-items-center justify-content-between'>
                     <CustomButton
