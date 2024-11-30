@@ -438,11 +438,8 @@ a {
 
 /* Movie Grid Styling */
 .category-carousel {
-  padding-bottom: var(--padding-bottom);
-}
-
-.category-carousel .container {
   position: relative;
+  padding-bottom: var(--padding-bottom);
 }
 
 .category-carousel h2 {
@@ -454,8 +451,8 @@ a {
   padding: 12px;
   background-color: #0f0f0f;
   position: absolute;
-  right: 30px;
-  top: -20px;
+  top: 0;
+  right: 0;
   border-radius: var(--border-red-outset);
 }
 
@@ -574,7 +571,7 @@ a {
   height: 100%;
   background: linear-gradient(
     to top,
-    rgba(20, 20, 20, 0.8) 0%,
+    rgba(20, 20, 20, 1) 0%,
     rgba(20, 20, 20, 0) 100%
   );
 }
@@ -591,6 +588,13 @@ a {
   align-items: center;
   justify-content: space-between;
   color: white;
+}
+
+.swiper-footer .top-ten {
+  padding: 10px;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  margin-bottom: 4px;
 }
 
 .swiper-footer p {
@@ -990,6 +994,38 @@ footer .footer-bottom-links li:not(:last-child) {
 
 .footer .footer-bottom-links li {
   margin-bottom: 0 !important;
+}
+
+/* Movies & Shows Styling */
+.movies-shows-page {
+  padding-top: 200px;
+}
+
+.movies-shows-page .movies,
+.movies-shows-page .shows {
+  padding: 50px;
+  box-shadow: 0 0 0 1px var(--shadow-color);
+  border-radius: var(--border-red-outset);
+  position: relative;
+}
+
+.movies-shows-page .movies::before,
+.movies-shows-page .shows::before {
+  position: absolute;
+  top: -18px;
+  left: 50px;
+  padding: 10px 24px;
+  color: white;
+  background-color: var(--primary-color);
+  border-radius: var(--border-red-inset);
+}
+
+.movies-shows-page .movies::before {
+  content: "Movies";
+}
+
+.movies-shows-page .shows::before {
+  content: "Shows";
 }
 
 /* Support styling */

@@ -57,9 +57,13 @@ const SubscriptionPlans = () => {
                   <p className='card-text'>{plan.features}</p>
                   <p className='plan-price'>
                     <span>
-                      {activePlan ? plan.yearlyPrice : plan.monthlyPrice}
+                      {activePlan === "Yearly"
+                        ? plan.yearlyPrice
+                        : plan.monthlyPrice}
                     </span>
-                    <span>{activePlan ? "/ year" : "/ month"}</span>
+                    <span>
+                      {activePlan === "Yearly" ? "/ year" : "/ month"}
+                    </span>
                   </p>
                   <div className='buttons d-flex align-items-center justify-content-between'>
                     <CustomButton
