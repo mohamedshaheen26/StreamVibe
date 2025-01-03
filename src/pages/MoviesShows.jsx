@@ -4,32 +4,33 @@ import Carousel from "../components/Carousel";
 
 const MoviesShowsPage = () => {
   // Fetch data for movies and shows
-  const { genres, popularByGenre, trending, newReleases, loading } =
-    useMoviesShowsData("movie"); // "movie" or "tv"
-
-  console.log(popularByGenre);
+  const {
+    genres,
+    randomMoviesByGenre,
+    popularByGenre,
+    trending,
+    newReleases,
+    loading,
+    error,
+  } = useMoviesShowsData("movie"); // "movie" or "tv"
 
   return (
     <div className='movies-shows-page'>
       <div className='container'>
         <div className='movies'>
+          {/* Genres Carousel */}
           <Carousel
             title='Our Genres'
-            data={genres.map((genre) => ({
-              ...genre,
-              topRatedMovies: popularByGenre[genre.id] || [],
-            }))}
+            data={randomMoviesByGenre}
             isLoading={loading}
             error={null}
             showGenreName={true}
           />
 
-          {/* Movie Popular by Genre Carousel */}
+          {/* Popular by Genre Carousel */}
           <Carousel
             title='Popular Top 10 In Genres'
-            data={Object.values(popularByGenre).flatMap(
-              (genre) => genre.topPopular || []
-            )}
+            data={popularByGenre}
             isLoading={loading}
             error={null}
             showGenreName={true}
