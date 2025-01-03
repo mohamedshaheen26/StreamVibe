@@ -5,7 +5,7 @@ function useResposiveScreen() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 991);
     };
 
     window.addEventListener("resize", handleResize);

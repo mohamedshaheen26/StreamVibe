@@ -8,8 +8,7 @@ import SubscriptionPlans from "../components/SubscriptionPlans";
 import useMoviesShowsData from "../hooks/useMoviesShowsData";
 
 function App() {
-  const { genres, popularByGenre, trending, newReleases, loading } =
-    useMoviesShowsData("movie");
+  const { randomMoviesByGenre, loading } = useMoviesShowsData("movie");
 
   return (
     <>
@@ -20,13 +19,11 @@ function App() {
             title='Explore our wide variety of categories'
             description="Whether you're looking for a comedy to make you laugh, a drama to make
           you think, or a documentary to learn something new"
-            data={genres.map((genre) => ({
-              ...genre,
-              topRatedMovies: popularByGenre[genre.id] || [],
-            }))}
+            data={randomMoviesByGenre}
             isLoading={loading}
             error={null}
             showGenreName={true}
+            showArrow={true}
           />
         </div>
       </ErrorBoundary>

@@ -1,22 +1,53 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import useResposiveScreen from "../hooks/useResposiveScreen.js";
 import { ThreeDots } from "react-loader-spinner";
 
-// Reusable Carousel Component
+let carouselCounter = 0;
+
+const formatValue = (value, type = "number") => {
+  if (type === "runtime") {
+    // Format runtime (in minutes) to "1h 30m"
+    if (!value) return "N/A"; // Handle missing runtime
+    const hours = Math.floor(value / 60);
+    const minutes = value % 60;
+    if (hours === 0) return `${minutes}m`;
+    if (minutes === 0) return `${hours}h`;
+    return `${hours}h ${minutes}m`;
+  } else if (type === "date") {
+    // Format date (e.g., "2022-04-01" → "1 Apr 2022")
+    if (!value) return "N/A"; // Handle missing date
+    const date = new Date(value);
+    const day = date.getDate(); // Get the day (1-31)
+    const month = date.toLocaleString("en-US", { month: "long" }); // Get the full month name
+    const year = date.getFullYear(); // Get the year
+    return `${day} ${month.slice(0, 3)} ${year}`; // Slice month to first 3 characters
+  } else {
+    // Format numbers (e.g., 1000 → 1K, 1500 → 1.5K)
+    if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M`;
+    if (value >= 1000) return `${(value / 1000).toFixed(1)}K`;
+    return `${((value * 100) / 1000).toFixed(1)}K`;
+  }
+};
+
 const Carousel = ({
   title,
   description,
   data,
   showBadgeForPopular = false,
   showGenreName = false,
-  showTimeline = false,
+  showArrow = false,
+  showDuration = false,
   showViwers = false,
+  showReleaseDate = false,
+  singlePoster = false,
   isLoading,
   error,
 }) => {
   const isMobile = useResposiveScreen();
+  const carouselId = `carousel-${carouselCounter++}`;
+  const swiperRef = useRef(null);
 
   if (error) {
     return (
@@ -26,27 +57,46 @@ const Carousel = ({
     );
   }
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (swiperRef.current) {
+        swiperRef.current.update(); // Update Swiper on window resize
+      }
+    };
+
+    window.addEventListener("resize", handleResize); // Add resize event listener
+
+    return () => {
+      window.removeEventListener("resize", handleResize); // Clean up event listener
+    };
+  }, []);
+
   return (
     <section className='category-carousel'>
       <h2>{title}</h2>
       {description ? <p>{description}</p> : ""}
 
       {/* Conditionally render based on mobile or desktop */}
-      {isMobile ? (
-        <div className='swiper-progress-bar'>
-          <div className='swiper-progress-fill'></div>
-        </div>
-      ) : (
-        <div className='swiper-control d-flex align-items-center'>
-          <div className='custom-prev p-3 d-flex align-items-center justify-content-center'>
-            <i className='fas fa-arrow-left'></i>
+      {!isLoading &&
+        (isMobile ? (
+          <div className='swiper-progress-bar'>
+            <div className='swiper-progress-fill'></div>
           </div>
-          <div className='custom-pagination'></div>
-          <div className='custom-next p-3 d-flex align-items-center justify-content-center'>
-            <i className='fas fa-arrow-right'></i>
+        ) : (
+          <div className='swiper-control d-flex align-items-center'>
+            <div
+              className={`custom-prev-${carouselId} carousel-prev p-3 d-flex align-items-center justify-content-center`}
+            >
+              <i className='fas fa-arrow-left'></i>
+            </div>
+            <div className={`custom-pagination-${carouselId}`}></div>
+            <div
+              className={`custom-next-${carouselId} carousel-next p-3 d-flex align-items-center justify-content-center`}
+            >
+              <i className='fas fa-arrow-right'></i>
+            </div>
           </div>
-        </div>
-      )}
+        ))}
       {isLoading ? (
         <ThreeDots
           visible={true}
@@ -65,31 +115,57 @@ const Carousel = ({
             isMobile
               ? false
               : {
-                  nextEl: ".custom-next",
-                  prevEl: ".custom-prev",
+                  nextEl: `.custom-next-${carouselId}`,
+                  prevEl: `.custom-prev-${carouselId}`,
                 }
           }
           pagination={
             isMobile
-              ? { type: "progressbar", el: ".swiper-progress-fill" }
+              ? {
+                  type: "progressbar",
+                  el: ".swiper-progress-fill",
+                }
               : {
                   clickable: true,
                   type: "bullets",
-                  el: ".custom-pagination",
+                  el: `.custom-pagination-${carouselId}`,
                   bulletClass: "swiper-pagination-bullet",
                   bulletActiveClass: "swiper-pagination-bullet-active",
                 }
           }
           breakpoints={{
-            420: { slidesPerView: 2, slidesPerGroup: 2 },
-            991: { slidesPerView: 3, slidesPerGroup: 3 },
-            1440: { slidesPerView: 4, slidesPerGroup: 4 },
+            768: {
+              slidesPerView: singlePoster ? 2 : 2,
+              slidesPerGroup: singlePoster ? 2 : 2,
+            },
+            991: {
+              slidesPerView: singlePoster ? 3 : 2,
+              slidesPerGroup: singlePoster ? 3 : 2,
+            },
+            1200: {
+              slidesPerView: singlePoster ? 4 : 3,
+              slidesPerGroup: singlePoster ? 4 : 3,
+            },
+            1440: {
+              slidesPerView: singlePoster ? 5 : 4,
+              slidesPerGroup: singlePoster ? 5 : 4,
+            },
+          }}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+          }}
+          onResize={() => {
+            if (swiperRef.current) {
+              swiperRef.current.update();
+            }
           }}
         >
           {data.map((genre, index) => (
             <SwiperSlide key={index}>
               <div className='genre-section'>
-                <div className='poster-grid'>
+                <div
+                  className={`poster-grid ${singlePoster && "single-poster"}`}
+                >
                   {genre.topRatedMovies?.map((movie, idx) => (
                     <div key={idx} className='poster-item'>
                       <img
@@ -100,20 +176,57 @@ const Carousel = ({
                     </div>
                   ))}
                 </div>
-                <div className='swiper-footer'>
-                  <div className='swiper-footer-left'>
-                    {showBadgeForPopular && (
-                      <span className='badge top-ten'>Top 10 In</span>
-                    )}
-                    {showGenreName && <p>{genre.name}</p>}
-                    {showTimeline && <p>{genre.release_date}</p>}
-                  </div>
-                  <div className='swiper-footer-right'>
-                    <a href='#'>
-                      <i className='fas fa-arrow-right'></i>
-                    </a>
-                    {showViwers && <p>{genre.viewers}</p>}
-                  </div>
+                <div
+                  className={`swiper-footer ${
+                    showReleaseDate && "justify-content-center"
+                  }`}
+                >
+                  {!showReleaseDate && (
+                    <>
+                      <div className='swiper-footer-left'>
+                        {showBadgeForPopular && (
+                          <span className='badge top-ten'>Top 10 In</span>
+                        )}
+                        {showGenreName && <p>{genre.name}</p>}
+                        {showDuration && (
+                          <p className='badge__single-Poster'>
+                            <img
+                              src='./assets/duration.svg'
+                              alt='duration For movie'
+                            />
+                            {formatValue(
+                              genre.topRatedMovies[0].runtime,
+                              "runtime"
+                            )}
+                          </p>
+                        )}
+                      </div>
+                      <div className='swiper-footer-right'>
+                        {showArrow && (
+                          <a href='#'>
+                            <i className='fas fa-arrow-right'></i>
+                          </a>
+                        )}
+                        {showViwers && (
+                          <p className='badge__single-Poster'>
+                            <img src='./assets/eye_viewers.svg' alt='Viewers' />
+                            {formatValue(genre.topRatedMovies[0].popularity)}
+                          </p>
+                        )}
+                      </div>
+                    </>
+                  )}
+                  {showReleaseDate && (
+                    <p className='badge__single-Poster w-100'>
+                      Released at{" "}
+                      <span>
+                        {formatValue(
+                          genre.topRatedMovies[0].release_date,
+                          "date"
+                        )}
+                      </span>
+                    </p>
+                  )}
                 </div>
               </div>
             </SwiperSlide>

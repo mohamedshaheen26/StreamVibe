@@ -49,6 +49,17 @@ a {
   text-decoration: none;
 }
 
+@media (min-width: 1400px) {
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl,
+  .container-xxl {
+    max-width: 1400px;
+  }
+}
+
 /* Custom Scrollbar */
 *::-webkit-scrollbar {
   width: 4px;
@@ -463,8 +474,8 @@ a {
   border-radius: var(--border-red-outset);
 }
 
-.swiper-control .custom-prev,
-.swiper-control .custom-next {
+.swiper-control .carousel-prev,
+.swiper-control .carousel-next {
   width: 44px;
   height: 44px;
   background-color: var(--secondary-color);
@@ -480,8 +491,8 @@ a {
   pointer-events: none;
 }
 
-.custom-prev:hover,
-.custom-next:hover {
+.carousel-prev:hover,
+.carousel-next:hover {
   background-color: rgba(230, 34, 34, 0.8);
 }
 
@@ -502,6 +513,7 @@ a {
 }
 
 .swiper-slide {
+  box-shadow: 0 0 0 1px var(--secondary-color);
   background-color: var(--bg-color-light);
   border-radius: var(--border-red-outset);
   padding: 20px;
@@ -540,7 +552,7 @@ a {
 /* progress bar */
 .swiper-progress-bar {
   position: absolute;
-  bottom: -30px;
+  bottom: 80px;
   width: 70px;
   height: 4px;
   background-color: #333333;
@@ -567,6 +579,14 @@ a {
   grid-template-rows: auto;
   gap: 10px;
   position: relative;
+}
+
+.poster-grid.single-poster {
+  display: block;
+}
+
+.poster-grid.single-poster img {
+  height: auto;
 }
 
 .poster-grid::before {
@@ -612,6 +632,23 @@ a {
   font-size: var(--text-size);
   color: white;
   transition: var(--transition-duration);
+}
+
+.swiper-footer .badge__single-Poster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  padding: 6px 10px 6px 6px;
+  border-radius: 51px;
+  border: 1px solid var(--secondary-color);
+  font-size: 16px;
+}
+
+.swiper-footer .badge__single-Poster span {
+  color: #bfbfbf;
 }
 
 /* Device Compatibility Styling */

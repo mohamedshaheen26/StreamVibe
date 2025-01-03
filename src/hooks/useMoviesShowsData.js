@@ -65,9 +65,19 @@ function useMoviesShowsData(type = "movie") {
         const trendingResponse = await axios.get(
           `${API_BASE_URL}/trending/${type}/week?api_key=${API_KEY}&language=en-US`
         );
-        const trendingTransformed = trendingResponse.data.results.map(
-          (movie) => ({
-            topRatedMovies: [movie], // Wrap the movie in an array
+        const trendingTransformed = await Promise.all(
+          trendingResponse.data.results.map(async (movie) => {
+            const detailsResponse = await axios.get(
+              `${API_BASE_URL}/${type}/${movie.id}?api_key=${API_KEY}&language=en-US`
+            );
+            return {
+              topRatedMovies: [
+                {
+                  ...movie,
+                  runtime: detailsResponse.data.runtime, // Add runtime
+                },
+              ],
+            };
           })
         );
 
