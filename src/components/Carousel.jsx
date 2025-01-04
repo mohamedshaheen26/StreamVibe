@@ -74,13 +74,15 @@ const Carousel = ({
   return (
     <section className='category-carousel'>
       <h2>{title}</h2>
-      {description ? <p>{description}</p> : ""}
+      {description ? <p className='description'>{description}</p> : ""}
 
       {/* Conditionally render based on mobile or desktop */}
       {!isLoading &&
         (isMobile ? (
-          <div className='swiper-progress-bar'>
-            <div className='swiper-progress-fill'></div>
+          <div className='swiper-progress-bar custom-swiper-progress-bar'>
+            <div
+              className={`swiper-progress-fill-${carouselId} custom-swiper-progress-fill`}
+            ></div>
           </div>
         ) : (
           <div className='swiper-control d-flex align-items-center'>
@@ -109,6 +111,7 @@ const Carousel = ({
         />
       ) : (
         <Swiper
+          className={isMobile && "custom__swiper"}
           modules={[Navigation, Pagination]}
           spaceBetween={20}
           navigation={
@@ -123,7 +126,7 @@ const Carousel = ({
             isMobile
               ? {
                   type: "progressbar",
-                  el: ".swiper-progress-fill",
+                  el: `.swiper-progress-fill-${carouselId}`,
                 }
               : {
                   clickable: true,
@@ -154,14 +157,18 @@ const Carousel = ({
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
           }}
-          onResize={() => {
-            if (swiperRef.current) {
-              swiperRef.current.update();
-            }
-          }}
         >
           {data.map((genre, index) => (
-            <SwiperSlide key={index}>
+            <SwiperSlide
+              key={index}
+              className={
+                isMobile
+                  ? `custom__swiper-slide ${
+                      singlePoster ? "custom__single-swiper-silde" : ""
+                    }`
+                  : ""
+              }
+            >
               <div className='genre-section'>
                 <div
                   className={`poster-grid ${singlePoster && "single-poster"}`}
@@ -172,6 +179,7 @@ const Carousel = ({
                         src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
                         alt={`${movie.title || movie.name} poster`}
                         className='poster-image'
+                        loading='lazy'
                       />
                     </div>
                   ))}
