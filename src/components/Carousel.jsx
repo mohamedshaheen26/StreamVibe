@@ -12,9 +12,9 @@ const formatValue = (value, type = "number") => {
     if (!value) return "N/A"; // Handle missing runtime
     const hours = Math.floor(value / 60);
     const minutes = value % 60;
-    if (hours === 0) return `${minutes}m`;
+    if (hours === 0) return `${minutes}min`;
     if (minutes === 0) return `${hours}h`;
-    return `${hours}h ${minutes}m`;
+    return `${hours}h ${minutes}min`;
   } else if (type === "date") {
     // Format date (e.g., "2022-04-01" → "1 Apr 2022")
     if (!value) return "N/A"; // Handle missing date
@@ -35,6 +35,7 @@ const Carousel = ({
   title,
   description,
   data,
+  isShow = false,
   showBadgeForPopular = false,
   showGenreName = false,
   showArrow = false,
@@ -42,6 +43,7 @@ const Carousel = ({
   showViwers = false,
   showReleaseDate = false,
   singlePoster = false,
+  seasonCount = false,
   isLoading,
   error,
 }) => {
@@ -111,7 +113,6 @@ const Carousel = ({
         />
       ) : (
         <Swiper
-          className={isMobile && "custom__swiper"}
           modules={[Navigation, Pagination]}
           spaceBetween={20}
           navigation={
@@ -137,7 +138,7 @@ const Carousel = ({
                 }
           }
           breakpoints={{
-            768: {
+            420: {
               slidesPerView: singlePoster ? 2 : 2,
               slidesPerGroup: singlePoster ? 2 : 2,
             },
@@ -150,8 +151,8 @@ const Carousel = ({
               slidesPerGroup: singlePoster ? 4 : 3,
             },
             1440: {
-              slidesPerView: singlePoster ? 5 : 4,
-              slidesPerGroup: singlePoster ? 5 : 4,
+              slidesPerView: singlePoster ? (isShow ? 4 : 5) : 4,
+              slidesPerGroup: singlePoster ? (isShow ? 4 : 5) : 4,
             },
           }}
           onSwiper={(swiper) => {
@@ -164,7 +165,10 @@ const Carousel = ({
               className={
                 isMobile
                   ? `custom__swiper-slide ${
-                      singlePoster ? "custom__single-swiper-silde" : ""
+                      singlePoster
+                        ? `custom__single-swiper-silde 
+                      ${isShow ? "increase__width" : ""}`
+                        : ""
                     }`
                   : ""
               }
@@ -202,6 +206,7 @@ const Carousel = ({
                               src='./assets/duration.svg'
                               alt='duration For movie'
                             />
+
                             {formatValue(
                               genre.topRatedMovies[0].runtime,
                               "runtime"
@@ -219,6 +224,15 @@ const Carousel = ({
                           <p className='badge__single-Poster'>
                             <img src='./assets/eye_viewers.svg' alt='Viewers' />
                             {formatValue(genre.topRatedMovies[0].popularity)}
+                          </p>
+                        )}
+                        {seasonCount && (
+                          <p className='badge__single-Poster'>
+                            <img
+                              src='./assets/season_Count.svg'
+                              alt='duration For movie'
+                            />
+                            {genre.topRatedMovies[0].numberOfSeasons} Season
                           </p>
                         )}
                       </div>

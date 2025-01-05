@@ -3,32 +3,65 @@ import axios from "axios";
 import { API_BASE_URL, API_KEY } from "../config";
 
 function usePopularMovies() {
-  const [images, setImages] = useState([]);
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        let allPosters = [];
+        let allMovies = [];
+        const moviesPerPage = 20; // TMDB returns 20 movies per page
+        const totalMoviesNeeded = 36;
+        const pagesNeeded = Math.ceil(totalMoviesNeeded / moviesPerPage);
 
         // Generate a consistent random page number daily
         const randomSeed = Math.floor(new Date().getDate() / 7); // Changes each week
-        const randomPage = 1 + (randomSeed % 20); // Adjust range based on TMDB's max pages
+        const randomPage = 1 + (randomSeed % 10); // Adjust range to avoid exceeding TMDB's max pages
 
-        for (let i = 0; i < 2; i++) {
+        // Fetch top-rated movies
+        for (let i = 0; i < pagesNeeded; i++) {
           const response = await axios.get(
             `${API_BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=en-US&page=${
               randomPage + i
             }`
           );
 
-          const posterUrls = response.data.results.map(
-            (movie) => `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-          );
-          allPosters = [...allPosters, ...posterUrls];
+          // Add the full movie data to the array
+          allMovies = [...allMovies, ...response.data.results];
+
+          // Stop fetching if we have enough movies
+          if (allMovies.length >= totalMoviesNeeded) {
+            break;
+          }
         }
 
-        setImages(allPosters); // Limit to 36 posters
-      } catch (error) {
+        // Limit to 36 movies
+        const topMovies = allMovies.slice(0, totalMoviesNeeded);
+
+        // Fetch additional images (posters and backdrops) for each movie
+        const moviesWithImages = await Promise.all(
+          topMovies.map(async (movie) => {
+            const imagesResponse = await axios.get(
+              `${API_BASE_URL}/movie/${movie.id}/images?api_key=${API_KEY}`
+            );
+
+            // Extract poster URLs and limit to 4 posters
+            const posters = imagesResponse.data.posters
+              .slice(0, 4) // Limit to 4 posters
+              .map((poster) => `https://image.tmdb.org/t/p/w500${poster.file_path}`);
+
+            // Extract backdrop URLs and limit to 4 backdrops
+            const backdrops = imagesResponse.data.backdrops
+              .slice(0, 4) // Limit to 4 backdrops
+              .map((backdrop) => `https://image.tmdb.org/t/p/w1280${backdrop.file_path}`);
+
+            // Add posters and backdrops to the movie object
+            return { ...movie, posters, backdrops };
+          })
+        );
+
+        setMovies(moviesWithImages);
+      } catch (err) {
         console.error("Error fetching popular movies:", err);
         setError("Failed to load popular movies.");
       }
@@ -37,7 +70,7 @@ function usePopularMovies() {
     fetchMovies();
   }, []);
 
-  return images;
+  return { movies, error };
 }
 
 export default usePopularMovies;

@@ -3,15 +3,19 @@ import CustomButton from "./CustomButton";
 import usePopularMovies from "@/hooks/usePopularMovies";
 
 const FreeTrial = () => {
-  const images = usePopularMovies();
+  const { movies, error } = usePopularMovies();
 
   return (
     <div className='container free-trial-section'>
       <section className='free-trial'>
         <div className='mosaic-background'>
-          {images.map((url, index) => (
-            <div key={index} className='mosaic-image'>
-              <img src={url} alt={`Movie poster ${index + 1}`} />
+          {movies.map((movie) => (
+            <div key={movie.id} className='mosaic-image'>
+              <img
+                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                alt={`Movie poster: ${movie.title}`}
+                loading='lazy'
+              />
             </div>
           ))}
         </div>

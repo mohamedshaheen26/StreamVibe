@@ -4,7 +4,7 @@ import useResposiveScreen from "../hooks/useResposiveScreen.js";
 import CustomButton from "./CustomButton.jsx";
 
 function HeroSection() {
-  const images = usePopularMovies().slice(0, 36);
+  const { movies, error } = usePopularMovies();
 
   const isMobile = useResposiveScreen();
 
@@ -18,9 +18,13 @@ function HeroSection() {
     <>
       <section className='hero-section'>
         <div className='mosaic-background'>
-          {images.map((url, index) => (
-            <div key={index} className='mosaic-image'>
-              <img src={url} alt={`Movie poster ${index + 1}`} />
+          {movies.map((movie) => (
+            <div key={movie.id} className='mosaic-image'>
+              <img
+                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                alt={`Movie poster: ${movie.title}`}
+                loading='lazy'
+              />
             </div>
           ))}
         </div>

@@ -5,8 +5,9 @@ import * as yup from "yup";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
+import usePopularMovies from "../hooks/usePopularMovies.js";
+
 import FAQSection from "../components/FAQSection";
-import UsePopularMovies from "../hooks/usePopularMovies";
 import CustomButton from "../components/CustomButton";
 
 const schema = yup.object().shape({
@@ -27,7 +28,7 @@ const schema = yup.object().shape({
 });
 
 const Support = () => {
-  const images = UsePopularMovies().slice(0, 16);
+  const { movies, error } = usePopularMovies();
 
   const {
     register,
@@ -57,12 +58,16 @@ const Support = () => {
               </p>
               <div className='support-imgs'>
                 <div className='mosaic-background'>
-                  {images.map((url, index) => (
-                    <div key={index} className='mosaic-image'>
-                      <img src={url} alt={`Movie poster ${index + 1}`} />
+                  {movies.map((movie) => (
+                    <div key={movie.id} className='mosaic-image'>
+                      <img
+                        src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                        alt={`Movie poster: ${movie.title}`}
+                        loading='lazy'
+                      />
                     </div>
                   ))}
-                </div>{" "}
+                </div>
               </div>
             </div>
             <div className='col-lg-8'>
@@ -166,8 +171,8 @@ const Support = () => {
                   <div className='col-md-8 mb-4 mb-md-0'>
                     <label className='material-checkbox'>
                       <input type='checkbox' />
-                      <span className='checkmark'></span>I agree with Terms of Use
-                      and Privacy Policy
+                      <span className='checkmark'></span>I agree with Terms of
+                      Use and Privacy Policy
                     </label>
                   </div>
                   <div className='col-12 col-md-4'>
