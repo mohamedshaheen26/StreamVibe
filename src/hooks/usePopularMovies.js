@@ -75,6 +75,7 @@ function usePopularMovies() {
               ...movie,
               posters,
               backdrops,
+              isMuted: false,
               trailerUrl: trailer
                 ? `https://www.youtube.com/embed/${trailer.key}`
                 : null,

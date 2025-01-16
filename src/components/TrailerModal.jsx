@@ -21,7 +21,7 @@ const TrailerModal = ({ trailerUrl, onClose }) => {
           <iframe
             width='100%'
             height='100%'
-            src={trailerUrl}
+            src={`${trailerUrl}?autoplay=1`}
             title='Movie Trailer'
             frameBorder='0'
             allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'

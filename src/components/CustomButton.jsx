@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const CustomButton = ({
+  id,
+  title,
   label,
   onClick,
   type = "button",
@@ -23,6 +25,8 @@ const CustomButton = ({
       onClick={onClick}
       className={`${baseClasses} ${disabledClass} ${className}`}
       disabled={isDisabled}
+      data-tooltip-id={id}
+      data-tooltip-content={title}
       {...rest}
     >
       {icon && iconPosition === "left" && (

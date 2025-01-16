@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Slider from "react-slick";
-
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 import Carousel from "../components/Carousel";
 import CustomButton from "../components/CustomButton";
 import ToggleTabs from "../components/ToggleTabs";
@@ -48,6 +49,8 @@ const MoviesShowsPage = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
     responsive: [
       {
         breakpoint: 991,
@@ -77,48 +80,63 @@ const MoviesShowsPage = () => {
             />
           )}
           <Slider {...settings}>
-            {movies.slice(0, 3).map((movie) => (
-              <div key={movie.id} className='movie-slide'>
-                <div
-                  className='movie-poster'
-                  style={{
-                    backgroundImage: `url(https://image.tmdb.org/t/p/w200${movie.backdrops[0]})`,
-                  }}
-                >
-                  <div className='movie-content'>
-                    <h3>{movie.title}</h3>
-                    <p>{movie.overview}</p>
-                    <div className='action-btn'>
-                      <CustomButton
-                        className={`custom-button me-4 ${
-                          isMobile ? "w-100 mb-4" : ""
-                        }`}
-                        icon='fa-play'
-                        label='Play Now'
-                        noMargin={false}
-                        onClick={() => setSelectedMovie(movie)}
-                      />
-                      <CustomButton
-                        className='custom-button featured-btn me-2'
-                        icon='fa-plus'
-                        noMargin={true}
-                      />
-                      <CustomButton
-                        className='custom-button featured-btn me-2'
-                        icon='fa-thumbs-up'
-                        noMargin={true}
-                      />
-                      <CustomButton
-                        className='custom-button featured-btn me-2'
-                        icon='fa-volume-up'
-                        noMargin={true}
-                      />
+            {movies
+              .sort((a, b) => b.popularity - a.popularity)
+              .slice(0, 3)
+              .map((movie) => (
+                <div key={movie.id} className='movie-slide'>
+                  <div
+                    className='movie-poster'
+                    style={{
+                      backgroundImage: `url(https://image.tmdb.org/t/p/w200${movie.backdrops[0]})`,
+                    }}
+                  >
+                    <div className='movie-content'>
+                      <h3>{movie.title}</h3>
+                      <p>{movie.overview}</p>
+                      <div className='action-btn'>
+                        <CustomButton
+                          id='play-tooltip'
+                          className={`custom-button me-4 ${
+                            isMobile ? "w-100 mb-4" : ""
+                          }`}
+                          icon='fa-play'
+                          label='Play Now'
+                          noMargin={false}
+                          title='Play the movie'
+                          onClick={() => setSelectedMovie(movie)}
+                        />
+                        <CustomButton
+                          id={"add-tooltip"}
+                          className='custom-button featured-btn me-2'
+                          icon='fa-plus'
+                          noMargin={true}
+                          title='Add to Watchlist'
+                        />
+                        <CustomButton
+                          id={"like-tooltip"}
+                          className='custom-button featured-btn me-2'
+                          icon='fa-thumbs-up'
+                          noMargin={true}
+                          title={movie.isLiked ? "Unlike" : "Like"}
+                        />
+                        <CustomButton
+                          id={"volume-tooltip"}
+                          className='custom-button featured-btn me-2'
+                          icon='fa-volume-up'
+                          noMargin={true}
+                          title={movie.isMuted ? "Unmute" : "Mute"}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </Slider>
+          <Tooltip id='play-tooltip' place='bottom' />
+          <Tooltip id='add-tooltip' place='bottom' />
+          <Tooltip id='like-tooltip' place='bottom' />
+          <Tooltip id='volume-tooltip' place='bottom' />
         </div>
 
         {isMobile ? (

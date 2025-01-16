@@ -1224,6 +1224,11 @@ footer .footer-bottom-links li:not(:last-child) {
   top: unset !important;
 }
 
+.slick-next:hover,
+.slick-prev:hover {
+  background-color: var(--secondary-color) !important;
+}
+
 .slick-next {
   right: 50px;
 }
