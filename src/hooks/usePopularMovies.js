@@ -48,15 +48,37 @@ function usePopularMovies() {
             // Extract poster URLs and limit to 4 posters
             const posters = imagesResponse.data.posters
               .slice(0, 4) // Limit to 4 posters
-              .map((poster) => `https://image.tmdb.org/t/p/w500${poster.file_path}`);
+              .map(
+                (poster) => `https://image.tmdb.org/t/p/w500${poster.file_path}`
+              );
 
             // Extract backdrop URLs and limit to 4 backdrops
             const backdrops = imagesResponse.data.backdrops
               .slice(0, 4) // Limit to 4 backdrops
-              .map((backdrop) => `https://image.tmdb.org/t/p/w1280${backdrop.file_path}`);
+              .map(
+                (backdrop) =>
+                  `https://image.tmdb.org/t/p/w1280${backdrop.file_path}`
+              );
+
+            // Fetch videos (trailers)
+            const videosResponse = await axios.get(
+              `${API_BASE_URL}/movie/${movie.id}/videos?api_key=${API_KEY}&language=en-US`
+            );
+
+            // Find the first trailer (usually the official one)
+            const trailer = videosResponse.data.results.find(
+              (video) => video.type === "Trailer" && video.site === "YouTube"
+            );
 
             // Add posters and backdrops to the movie object
-            return { ...movie, posters, backdrops };
+            return {
+              ...movie,
+              posters,
+              backdrops,
+              trailerUrl: trailer
+                ? `https://www.youtube.com/embed/${trailer.key}`
+                : null,
+            };
           })
         );
 

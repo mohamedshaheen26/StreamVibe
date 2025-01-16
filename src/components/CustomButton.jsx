@@ -11,6 +11,7 @@ const CustomButton = ({
   className = "",
   icon,
   iconPosition = "left",
+  noMargin = false,
   ...rest
 }) => {
   const baseClasses = `btn btn-${variant}`;
@@ -24,17 +25,19 @@ const CustomButton = ({
       disabled={isDisabled}
       {...rest}
     >
-      {icon && iconPosition === "left" && <i className={`fa ${icon} me-2`}></i>}
+      {icon && iconPosition === "left" && (
+        <i className={`fa ${icon} ${noMargin ? "" : "me-2"}`}></i>
+      )}
       {label}
       {icon && iconPosition === "right" && (
-        <i className={`fa ${icon} ms-2`}></i>
+        <i className={`fa ${icon} ${noMargin ? "" : "ms-2"}`}></i>
       )}
     </button>
   );
 };
 
 CustomButton.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   onClick: PropTypes.func,
   type: PropTypes.oneOf(["button", "submit", "reset"]),
   variant: PropTypes.oneOf([

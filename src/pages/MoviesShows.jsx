@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import Slider from "react-slick";
+
 import Carousel from "../components/Carousel";
+import CustomButton from "../components/CustomButton";
 import ToggleTabs from "../components/ToggleTabs";
+import TrailerModal from "../components/TrailerModal";
 
 import useMoviesShowsData from "@/hooks/useMoviesShowsData";
 import useResposiveScreen from "../hooks/useResposiveScreen";
@@ -10,6 +14,7 @@ const MoviesShowsPage = () => {
   const isMobile = useResposiveScreen();
   const [activeTab, setActiveTab] = useState("Movies");
   const { movies, error } = usePopularMovies();
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   // Fetch data for movies
   const {
@@ -36,9 +41,86 @@ const MoviesShowsPage = () => {
   if (moviesError) return <p>Error: {moviesError.message}</p>;
   if (showsError) return <p>Error: {showsError.message}</p>;
 
+  const settings = {
+    dots: true,
+    arrows: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 991,
+        settings: {
+          dots: false,
+          arrows: false,
+        },
+      },
+    ],
+    customPaging: () => (
+      <div
+        style={{
+          background: "gray",
+        }}
+      />
+    ),
+  };
+
   return (
     <div className='movies-shows-page'>
       <div className='container'>
+        <div className='slider-Movies'>
+          {selectedMovie && (
+            <TrailerModal
+              trailerUrl={selectedMovie.trailerUrl}
+              onClose={() => setSelectedMovie(null)}
+            />
+          )}
+          <Slider {...settings}>
+            {movies.slice(0, 3).map((movie) => (
+              <div key={movie.id} className='movie-slide'>
+                <div
+                  className='movie-poster'
+                  style={{
+                    backgroundImage: `url(https://image.tmdb.org/t/p/w200${movie.backdrops[0]})`,
+                  }}
+                >
+                  <div className='movie-content'>
+                    <h3>{movie.title}</h3>
+                    <p>{movie.overview}</p>
+                    <div className='action-btn'>
+                      <CustomButton
+                        className={`custom-button me-4 ${
+                          isMobile ? "w-100 mb-4" : ""
+                        }`}
+                        icon='fa-play'
+                        label='Play Now'
+                        noMargin={false}
+                        onClick={() => setSelectedMovie(movie)}
+                      />
+                      <CustomButton
+                        className='custom-button featured-btn me-2'
+                        icon='fa-plus'
+                        noMargin={true}
+                      />
+                      <CustomButton
+                        className='custom-button featured-btn me-2'
+                        icon='fa-thumbs-up'
+                        noMargin={true}
+                      />
+                      <CustomButton
+                        className='custom-button featured-btn me-2'
+                        icon='fa-volume-up'
+                        noMargin={true}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </Slider>
+        </div>
+
         {isMobile ? (
           <>
             {/* Toggle Tabs for Mobile */}

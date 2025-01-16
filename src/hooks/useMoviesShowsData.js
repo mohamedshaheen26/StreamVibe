@@ -50,14 +50,12 @@ function useMoviesShowsData(type = "movie") {
 
       return totalRuntime;
     } catch (error) {
-      console.error("Error fetching total runtime for show:", error);
       return null;
     }
   };
 
   useEffect(() => {
     if (type !== "movie" && type !== "tv") {
-      console.error(`Invalid type: ${type}. Must be "movie" or "tv".`);
       setError(new Error("Invalid type specified."));
       setLoading(false);
       return;
@@ -287,7 +285,6 @@ function useMoviesShowsData(type = "movie") {
 
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching data:", err);
         setError(err);
         setLoading(false);
       }
