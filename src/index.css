@@ -1409,6 +1409,26 @@ footer .footer-bottom-links li:not(:last-child) {
   height: 50px;
 }
 
+
+.page-item .page-link {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  color: white;
+  background-color: var(--secondary-color);
+}
+
+.page-item .page-link:disabled {
+  opacity: 0.5;
+}
+
+.page-item .page-link:hover:not(:disabled),
+.page-item .page-link:focus:not(:disabled) {
+  color: white;
+  box-shadow: unset;
+  background-color: var(--primary-color);
+}
+
 /* Support styling */
 .support {
   padding-top: 200px;
