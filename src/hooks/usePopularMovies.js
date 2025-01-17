@@ -5,6 +5,7 @@ import { API_BASE_URL, API_KEY } from "../config";
 function usePopularMovies() {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -84,16 +85,18 @@ function usePopularMovies() {
         );
 
         setMovies(moviesWithImages);
+        setLoading(false);
       } catch (err) {
         console.error("Error fetching popular movies:", err);
         setError("Failed to load popular movies.");
+        setLoading(false);
       }
     };
 
     fetchMovies();
   }, []);
 
-  return { movies, error };
+  return { movies, loading, error };
 }
 
 export default usePopularMovies;

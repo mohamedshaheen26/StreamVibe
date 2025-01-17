@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from "react";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import useResposiveScreen from "../hooks/useResposiveScreen.js";
 import { ThreeDots } from "react-loader-spinner";
+
+import useResposiveScreen from "../hooks/useResposiveScreen.js";
 
 let carouselCounter = 0;
 
@@ -46,6 +48,7 @@ const Carousel = ({
   seasonCount = false,
   isLoading,
   error,
+  onGenreClicked,
 }) => {
   const isMobile = useResposiveScreen();
   const carouselId = `carousel-${carouselCounter++}`;
@@ -62,14 +65,14 @@ const Carousel = ({
   useEffect(() => {
     const handleResize = () => {
       if (swiperRef.current) {
-        swiperRef.current.update(); // Update Swiper on window resize
+        swiperRef.current.update();
       }
     };
 
-    window.addEventListener("resize", handleResize); // Add resize event listener
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize); // Clean up event listener
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -173,7 +176,10 @@ const Carousel = ({
                   : ""
               }
             >
-              <div className='genre-section'>
+              <div
+                className='genre-section'
+                onClick={() => onGenreClicked(genre)}
+              >
                 <div
                   className={`poster-grid ${singlePoster && "single-poster"}`}
                 >

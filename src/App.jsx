@@ -6,13 +6,14 @@ import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 
 import Home from "./pages/Home.jsx";
+import MoviesShows from "./pages/MoviesShows.jsx";
+import GenrePage from "./pages/GenrePage";
 import Support from "./pages/Support.jsx";
 import Subscriptions from "./pages/Subscriptions.jsx";
 
 import StreamVibeLoader from "./components/StreamVibeLoader";
 import FreeTrial from "./components/FreeTrial.jsx";
 import ScrollToTop from "./components/ScrollToTop";
-import MoviesShows from "./pages/MoviesShows.jsx";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -35,8 +36,8 @@ const App = () => {
         <main>
           <Routes>
             <Route path='/' element={<Home />} />
-            {/* Add future pages here */}
-            <Route path='/movies' element={<MoviesShows />} />
+            <Route path='/movies&shows' element={<MoviesShows />} />
+            <Route path='/genre/:id/:type' element={<GenrePage />} />
             <Route path='/support' element={<Support />} />
             <Route path='/subscriptions' element={<Subscriptions />} />
           </Routes>

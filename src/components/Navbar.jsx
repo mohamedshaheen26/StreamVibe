@@ -81,7 +81,7 @@ function Navbar() {
               </NavLink>
             </li>
             <li className='nav-item'>
-              <NavLink className='nav-link' to='/movies'>
+              <NavLink className='nav-link' to='/movies&shows'>
                 Movies & Shows
               </NavLink>
             </li>

@@ -6,6 +6,8 @@ import Carousel from "../components/Carousel";
 import CustomButton from "../components/CustomButton";
 import ToggleTabs from "../components/ToggleTabs";
 import TrailerModal from "../components/TrailerModal";
+import { ThreeDots } from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
 
 import useMoviesShowsData from "@/hooks/useMoviesShowsData";
 import useResposiveScreen from "../hooks/useResposiveScreen";
@@ -14,9 +16,9 @@ import usePopularMovies from "../hooks/usePopularMovies";
 const MoviesShowsPage = () => {
   const isMobile = useResposiveScreen();
   const [activeTab, setActiveTab] = useState("Movies");
-  const { movies, error } = usePopularMovies();
+  const { movies, loading, error } = usePopularMovies();
   const [selectedMovie, setSelectedMovie] = useState(null);
-
+  const navigate = useNavigate();
   // Fetch data for movies
   const {
     genres: movieGenres,
@@ -68,6 +70,8 @@ const MoviesShowsPage = () => {
       />
     ),
   };
+  const handleGenreClick = (genre, type) =>
+    navigate(`/genre/${genre.id}/${type}`);
 
   return (
     <div className='movies-shows-page'>
@@ -79,60 +83,72 @@ const MoviesShowsPage = () => {
               onClose={() => setSelectedMovie(null)}
             />
           )}
-          <Slider {...settings}>
-            {movies
-              .sort((a, b) => b.popularity - a.popularity)
-              .slice(0, 3)
-              .map((movie) => (
-                <div key={movie.id} className='movie-slide'>
-                  <div
-                    className='movie-poster'
-                    style={{
-                      backgroundImage: `url(https://image.tmdb.org/t/p/w200${movie.backdrops[0]})`,
-                    }}
-                  >
-                    <div className='movie-content'>
-                      <h3>{movie.title}</h3>
-                      <p>{movie.overview}</p>
-                      <div className='action-btn'>
-                        <CustomButton
-                          id='play-tooltip'
-                          className={`custom-button me-4 ${
-                            isMobile ? "w-100 mb-4" : ""
-                          }`}
-                          icon='fa-play'
-                          label='Play Now'
-                          noMargin={false}
-                          title='Play the movie'
-                          onClick={() => setSelectedMovie(movie)}
-                        />
-                        <CustomButton
-                          id={"add-tooltip"}
-                          className='custom-button featured-btn me-2'
-                          icon='fa-plus'
-                          noMargin={true}
-                          title='Add to Watchlist'
-                        />
-                        <CustomButton
-                          id={"like-tooltip"}
-                          className='custom-button featured-btn me-2'
-                          icon='fa-thumbs-up'
-                          noMargin={true}
-                          title={movie.isLiked ? "Unlike" : "Like"}
-                        />
-                        <CustomButton
-                          id={"volume-tooltip"}
-                          className='custom-button featured-btn me-2'
-                          icon='fa-volume-up'
-                          noMargin={true}
-                          title={movie.isMuted ? "Unmute" : "Mute"}
-                        />
+          {loading ? (
+            <ThreeDots
+              visible={true}
+              height='80'
+              width='80'
+              color='#e50000'
+              radius='9'
+              ariaLabel='three-dots-loading'
+              wrapperClass='three-dots-loader'
+            />
+          ) : (
+            <Slider {...settings}>
+              {movies
+                .sort((a, b) => b.popularity - a.popularity)
+                .slice(0, 3)
+                .map((movie) => (
+                  <div key={movie.id} className='movie-slide'>
+                    <div
+                      className='movie-poster'
+                      style={{
+                        backgroundImage: `url(https://image.tmdb.org/t/p/w200${movie.backdrops[0]})`,
+                      }}
+                    >
+                      <div className='movie-content'>
+                        <h3>{movie.title}</h3>
+                        <p>{movie.overview}</p>
+                        <div className='action-btn'>
+                          <CustomButton
+                            id='play-tooltip'
+                            className={`custom-button me-4 ${
+                              isMobile ? "w-100 mb-4" : ""
+                            }`}
+                            icon='fa-play'
+                            label='Play Now'
+                            noMargin={false}
+                            title='Play the movie'
+                            onClick={() => setSelectedMovie(movie)}
+                          />
+                          <CustomButton
+                            id={"add-tooltip"}
+                            className='custom-button featured-btn me-2'
+                            icon='fa-plus'
+                            noMargin={true}
+                            title='Add to Watchlist'
+                          />
+                          <CustomButton
+                            id={"like-tooltip"}
+                            className='custom-button featured-btn me-2'
+                            icon='fa-thumbs-up'
+                            noMargin={true}
+                            title={movie.isLiked ? "Unlike" : "Like"}
+                          />
+                          <CustomButton
+                            id={"volume-tooltip"}
+                            className='custom-button featured-btn me-2'
+                            icon='fa-volume-up'
+                            noMargin={true}
+                            title={movie.isMuted ? "Unmute" : "Mute"}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-          </Slider>
+                ))}
+            </Slider>
+          )}
           <Tooltip id='play-tooltip' place='bottom' />
           <Tooltip id='add-tooltip' place='bottom' />
           <Tooltip id='like-tooltip' place='bottom' />
@@ -159,6 +175,7 @@ const MoviesShowsPage = () => {
                   error={moviesError}
                   showGenreName={true}
                   showArrow={true}
+                  onGenreClicked={(genre) => handleGenreClick(genre, "movies")}
                 />
 
                 {/* Popular by Genre Carousel */}
@@ -170,6 +187,7 @@ const MoviesShowsPage = () => {
                   showBadgeForPopular={true}
                   showGenreName={true}
                   showArrow={true}
+                  onGenreClicked={(genre) => handleGenreClick(genre, "movies")}
                 />
 
                 {/* Trending Movies Carousel */}
@@ -181,6 +199,7 @@ const MoviesShowsPage = () => {
                   singlePoster={true}
                   showDuration={true}
                   showViwers={true}
+                  onGenreClicked={(genre) => handleGenreClick(genre, "movies")}
                 />
 
                 {/* New Releases Carousel */}
@@ -191,6 +210,7 @@ const MoviesShowsPage = () => {
                   error={moviesError}
                   singlePoster={true}
                   showReleaseDate={true}
+                  onGenreClicked={(genre) => handleGenreClick(genre, "movies")}
                 />
               </div>
             ) : (
@@ -203,6 +223,7 @@ const MoviesShowsPage = () => {
                   error={showsError}
                   showGenreName={true}
                   showArrow={true}
+                  onGenreClicked={(genre) => handleGenreClick(genre, "shows")}
                 />
 
                 {/* Popular by Genre Carousel */}
@@ -214,6 +235,7 @@ const MoviesShowsPage = () => {
                   showBadgeForPopular={true}
                   showGenreName={true}
                   showArrow={true}
+                  onGenreClicked={(genre) => handleGenreClick(genre, "shows")}
                 />
 
                 {/* Trending TV Shows Carousel */}
@@ -226,6 +248,7 @@ const MoviesShowsPage = () => {
                   isShow={true}
                   showDuration={true}
                   seasonCount={true}
+                  onGenreClicked={(genre) => handleGenreClick(genre, "shows")}
                 />
 
                 {/* New Releases Carousel */}
@@ -238,6 +261,7 @@ const MoviesShowsPage = () => {
                   isShow={true}
                   seasonCount={true}
                   showDuration={true}
+                  onGenreClicked={(genre) => handleGenreClick(genre, "shows")}
                 />
               </div>
             )}
@@ -245,7 +269,7 @@ const MoviesShowsPage = () => {
         ) : (
           <>
             {/* Desktop View */}
-            <div className='movies'>
+            <div className='movies__shows' data-genre='Movies'>
               {/* Genres Carousel */}
               <Carousel
                 title='Our Genres'
@@ -254,6 +278,7 @@ const MoviesShowsPage = () => {
                 error={moviesError}
                 showGenreName={true}
                 showArrow={true}
+                onGenreClicked={(genre) => handleGenreClick(genre, "movies")}
               />
 
               {/* Popular by Genre Carousel */}
@@ -265,6 +290,7 @@ const MoviesShowsPage = () => {
                 showBadgeForPopular={true}
                 showGenreName={true}
                 showArrow={true}
+                onGenreClicked={(genre) => handleGenreClick(genre, "movies")}
               />
 
               {/* Trending Movies Carousel */}
@@ -276,6 +302,7 @@ const MoviesShowsPage = () => {
                 singlePoster={true}
                 showDuration={true}
                 showViwers={true}
+                onGenreClicked={(genre) => handleGenreClick(genre, "movies")}
               />
 
               {/* New Releases Carousel */}
@@ -286,9 +313,10 @@ const MoviesShowsPage = () => {
                 error={moviesError}
                 singlePoster={true}
                 showReleaseDate={true}
+                onGenreClicked={(genre) => handleGenreClick(genre, "movies")}
               />
             </div>
-            <div className='shows'>
+            <div className='movies__shows' data-genre='Shows'>
               {/* Genres Carousel */}
               <Carousel
                 title='Our Genres'
@@ -297,6 +325,7 @@ const MoviesShowsPage = () => {
                 error={showsError}
                 showGenreName={true}
                 showArrow={true}
+                onGenreClicked={(genre) => handleGenreClick(genre, "shows")}
               />
 
               {/* Popular by Genre Carousel */}
@@ -308,6 +337,7 @@ const MoviesShowsPage = () => {
                 showBadgeForPopular={true}
                 showGenreName={true}
                 showArrow={true}
+                onGenreClicked={(genre) => handleGenreClick(genre, "shows")}
               />
 
               {/* Trending TV Shows Carousel */}
@@ -320,6 +350,7 @@ const MoviesShowsPage = () => {
                 isShow={true}
                 showDuration={true}
                 seasonCount={true}
+                onGenreClicked={(genre) => handleGenreClick(genre, "shows")}
               />
 
               {/* New Releases Carousel */}
@@ -332,6 +363,7 @@ const MoviesShowsPage = () => {
                 isShow={true}
                 seasonCount={true}
                 showDuration={true}
+                onGenreClicked={(genre) => handleGenreClick(genre, "shows")}
               />
             </div>
           </>

@@ -1,14 +1,21 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import HeroSection from "../components/HeroSection";
 import Carousel from "../components/Carousel";
 import ErrorBoundary from "../components/ErrorBoundary";
 import DeviceCompatibility from "../components/DeviceCompatibility";
 import FAQSection from "../components/FAQSection";
 import SubscriptionPlans from "../components/SubscriptionPlans";
+
 import useMoviesShowsData from "../hooks/useMoviesShowsData";
 
 function App() {
   const { randomMoviesByGenre, loading } = useMoviesShowsData("movie");
+  const navigate = useNavigate();
+
+  const handleGenreClick = (genre, type) =>
+    navigate(`/genre/${genre.id}/${type}`);
 
   return (
     <>
@@ -24,6 +31,7 @@ function App() {
             error={null}
             showGenreName={true}
             showArrow={true}
+            onGenreClicked={(genre) => handleGenreClick(genre, "movies")}
           />
         </div>
       </ErrorBoundary>
