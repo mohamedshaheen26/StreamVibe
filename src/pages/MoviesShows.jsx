@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Slider from "react-slick";
+
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Carousel from "../components/Carousel";
@@ -19,6 +20,7 @@ const MoviesShowsPage = () => {
   const { movies, loading, error } = usePopularMovies();
   const [selectedMovie, setSelectedMovie] = useState(null);
   const navigate = useNavigate();
+
   // Fetch data for movies
   const {
     genres: movieGenres,
@@ -71,7 +73,10 @@ const MoviesShowsPage = () => {
     ),
   };
   const handleGenreClick = (genre, type) =>
-    navigate(`/genre/${genre.id}/${type}`);
+    navigate(`/movies&shows/genre/${genre.id}/${type}`);
+
+  const handleMovieClick = (genre, type) =>
+    navigate(`/movies&shows/genre/${genre.id}/${type}/`);
 
   return (
     <div className='movies-shows-page'>
@@ -103,7 +108,7 @@ const MoviesShowsPage = () => {
                     <div
                       className='movie-poster'
                       style={{
-                        backgroundImage: `url(https://image.tmdb.org/t/p/w200${movie.backdrops[0]})`,
+                        backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
                       }}
                     >
                       <div className='movie-content'>
@@ -159,7 +164,7 @@ const MoviesShowsPage = () => {
           <>
             {/* Toggle Tabs for Mobile */}
             <ToggleTabs
-              tabs={["Movies", "Shows"]} // Tabs for Movies and Shows
+              tabs={["Movies", "Shows"]}
               activeTab={activeTab}
               onTabChange={(selectedTab) => setActiveTab(selectedTab)}
             />

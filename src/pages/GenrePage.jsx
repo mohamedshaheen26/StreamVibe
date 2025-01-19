@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL, API_KEY } from "../config";
-
 import { ThreeDots } from "react-loader-spinner";
 
 const GenrePage = () => {
-  const { id, type } = useParams(); // Get `id` and `type` from the URL
-  const [data, setData] = useState([]); // Store movies or shows
+  const { id, type } = useParams();
+  const [data, setData] = useState([]);
   const [genreName, setGenreName] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isPaginationLoading, setIsPaginationLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+
+  const isMovies = type === "movies";
 
   useEffect(() => {
     const fetchGenreName = async () => {
       try {
-        // Fetch genre name based on the type (movies or shows)
-        const endpoint = type === "movies" ? "movie" : "tv";
+        const endpoint = isMovies ? "movie" : "tv";
         const response = await axios.get(
           `${API_BASE_URL}/genre/${endpoint}/list`,
           {
@@ -36,8 +36,7 @@ const GenrePage = () => {
 
     const fetchData = async () => {
       try {
-        // Fetch movies or shows based on the type
-        const endpoint = type === "movies" ? "movie" : "tv";
+        const endpoint = isMovies ? "movie" : "tv";
         const [
           page1Response,
           page2Response,
@@ -49,40 +48,39 @@ const GenrePage = () => {
             params: {
               api_key: API_KEY,
               with_genres: id,
-              page: page * 5 - 4, // Fetch the first page of 20 results
+              page: page * 5 - 4,
             },
           }),
           axios.get(`${API_BASE_URL}/discover/${endpoint}`, {
             params: {
               api_key: API_KEY,
               with_genres: id,
-              page: page * 5 - 3, // Fetch the second page of 20 results
+              page: page * 5 - 3,
             },
           }),
           axios.get(`${API_BASE_URL}/discover/${endpoint}`, {
             params: {
               api_key: API_KEY,
               with_genres: id,
-              page: page * 5 - 3, // Fetch the third page of 20 results
+              page: page * 5 - 2,
             },
           }),
           axios.get(`${API_BASE_URL}/discover/${endpoint}`, {
             params: {
               api_key: API_KEY,
               with_genres: id,
-              page: page * 5 - 1, // Fetch the third page of 20 results
+              page: page * 5 - 1,
             },
           }),
           axios.get(`${API_BASE_URL}/discover/${endpoint}`, {
             params: {
               api_key: API_KEY,
               with_genres: id,
-              page: page * 5, // Fetch the third page of 20 results
+              page: page * 5,
             },
           }),
         ]);
 
-        // Combine the results from all three pages
         const combinedResults = [
           ...page1Response.data.results,
           ...page2Response.data.results,
@@ -96,101 +94,111 @@ const GenrePage = () => {
         console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
+        setIsPaginationLoading(false);
       }
     };
+
     fetchGenreName();
     fetchData();
-  }, [id, type, page]);
-
-  console.log(data);
-
-  if (loading) return <p>Loading...</p>;
+  }, [id, type, page, isMovies]);
 
   const handlePreviousPage = () => {
     if (page > 1) {
-      setPage((prevPage) => prevPage - 1); // Go to the previous page
+      setPage((prevPage) => prevPage - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
-  const handleNextPage = () => {
+  const handleNextPage = async () => {
     if (page < totalPages) {
-      setPage((prevPage) => prevPage + 1); // Go to the next page
+      setIsPaginationLoading(true);
+      setPage((prevPage) => prevPage + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   return (
     <div className='movies-shows-page'>
       <div className='container'>
-        <div className='movies__shows' data-genre={`${genreName} Movies`}>
-          {loading ? (
-            <ThreeDots
-              visible={true}
-              height='80'
-              width='80'
-              color='#e50000'
-              radius='9'
-              ariaLabel='three-dots-loading'
-              wrapperClass='three-dots-loader'
-            />
+        <div
+          className='movies__shows'
+          data-genre={`${genreName} ${isMovies ? "Movies" : "TV Shows"}`}
+        >
+          {loading || isPaginationLoading ? (
+            <div className='loader-container'>
+              <ThreeDots
+                visible={true}
+                height='80'
+                width='80'
+                color='#e50000'
+                radius='9'
+                ariaLabel='three-dots-loading'
+                wrapperClass='three-dots-loader'
+              />
+            </div>
           ) : (
             <>
               <div className='movies-grid'>
                 {data.map((item) => (
-                  <a href='#'>
+                  <Link
+                    to={`/movies&shows/genre/${id}/${
+                      isMovies ? "movie" : "tv"
+                    }/${item.id}`}
+                    key={item.id}
+                  >
                     <div
-                      key={item.id}
                       className='movie-card'
                       style={{
-                        backgroundImage: `url(https://image.tmdb.org/t/p/w200${item.poster_path})`,
+                        backgroundImage: `url(https://image.tmdb.org/t/p/original${item.poster_path})`,
                       }}
                     >
                       <div className='movie-content'>
-                        <span class='rate'>
-                          <i class='fa-solid fa-star'></i>
+                        <span className='rate'>
+                          <i className='fa-solid fa-star'></i>
                           {item.vote_average.toFixed(1)}
                         </span>
                         <span className='playicon'>
                           <i className='fas fa-circle-play'></i>
                         </span>
                         <div>
-                          <h4 class='title'>{item.title || item.name}</h4>
-                          <h5 class='description'>{item.overview}</h5>
+                          <h4 className='title'>{item.title || item.name}</h4>
+                          <h5 className='description'>{item.overview}</h5>
                         </div>
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 ))}
               </div>
               <nav
                 aria-label='Page navigation'
-                class='d-flex justify-content-center mt-5'
+                className='d-flex justify-content-center mt-5'
               >
-                <ul class='pagination'>
-                  <li class='page-item'>
+                <ul className='pagination'>
+                  <li className='page-item'>
                     <button
-                      class='page-link cursor-pointer'
+                      className='page-link cursor-pointer'
                       type='button'
                       aria-label='Page Button'
                       onClick={handlePreviousPage}
-                      disabled={page === 1}
+                      disabled={page === 1 || isPaginationLoading}
                     >
-                      <i class='fas fa-angle-double-left'></i>
+                      <i className='fas fa-angle-double-left'></i>
                     </button>
                   </li>
-                  <li class='page-item text-white d-flex align-items-center p-1'>
+                  <li className='page-item text-white d-flex align-items-center p-1'>
                     <span>
                       Page {page} of {totalPages}
                     </span>
                   </li>
-                  <li class='page-item'>
+                  <li className='page-item'>
                     <button
-                      class='page-link cursor-pointer'
+                      className='page-link cursor-pointer'
                       type='button'
                       aria-label='Page Button'
                       onClick={handleNextPage}
-                      disabled={page === totalPages}
+                      disabled={page === totalPages || isPaginationLoading}
                     >
-                      <i class='fas fa-angle-double-right'></i>
+                      <i className='fas fa-angle-double-right'></i>
                     </button>
                   </li>
                 </ul>

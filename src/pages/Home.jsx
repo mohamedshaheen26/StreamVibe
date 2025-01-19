@@ -15,7 +15,7 @@ function App() {
   const navigate = useNavigate();
 
   const handleGenreClick = (genre, type) =>
-    navigate(`/genre/${genre.id}/${type}`);
+    navigate(`movies&shows/genre/${genre.id}/${type}`);
 
   return (
     <>

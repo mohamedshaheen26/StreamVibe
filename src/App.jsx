@@ -8,6 +8,7 @@ import Footer from "./components/Footer.jsx";
 import Home from "./pages/Home.jsx";
 import MoviesShows from "./pages/MoviesShows.jsx";
 import GenrePage from "./pages/GenrePage";
+import MovieDetails from "./pages/MovieDetails";
 import Support from "./pages/Support.jsx";
 import Subscriptions from "./pages/Subscriptions.jsx";
 
@@ -37,7 +38,14 @@ const App = () => {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/movies&shows' element={<MoviesShows />} />
-            <Route path='/genre/:id/:type' element={<GenrePage />} />
+            <Route
+              path='/movies&shows/genre/:id/:type'
+              element={<GenrePage />}
+            />
+            <Route
+              path='/movies&shows/genre/:id/:type/:movieId'
+              element={<MovieDetails />}
+            />
             <Route path='/support' element={<Support />} />
             <Route path='/subscriptions' element={<Subscriptions />} />
           </Routes>
