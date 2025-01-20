@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { useParams } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 import axios from "axios";
 import { API_BASE_URL, API_KEY } from "../config";
+import TrailerModal from "../components/TrailerModal";
 import { ThreeDots } from "react-loader-spinner";
 import CustomButton from "../components/CustomButton";
 import useResposiveScreen from "../hooks/useResposiveScreen";
+
 const MovieDetails = () => {
   const { id, type, movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const isMobile = useResposiveScreen();
-
+  const [selectedMovie, setSelectedMovie] = useState(null);
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
@@ -61,6 +65,7 @@ const MovieDetails = () => {
           videosResponse,
           similarResponse,
           reviewsResponse,
+          trailerResponse,
         ] = await Promise.all([
           axios.get(`${API_BASE_URL}/${type}/${movieId}/images`, {
             params: {
@@ -78,6 +83,11 @@ const MovieDetails = () => {
             },
           }),
           axios.get(`${API_BASE_URL}/${type}/${movieId}/reviews`, {
+            params: {
+              api_key: API_KEY,
+            },
+          }),
+          axios.get(`${API_BASE_URL}/${type}/${movieId}/videos`, {
             params: {
               api_key: API_KEY,
             },
@@ -115,6 +125,10 @@ const MovieDetails = () => {
           );
         }
 
+        const trailer = videosResponse.data.results.find(
+          (video) => video.type === "Trailer" && video.site === "YouTube"
+        );
+
         // Combine all data into a single object
         const movieData = {
           ...movieResponse.data,
@@ -127,6 +141,9 @@ const MovieDetails = () => {
           similar: similarResponse.data,
           reviews: reviewsResponse.data.results,
           seasons: seasonsWithEpisodes,
+          trailerUrl: trailer
+            ? `https://www.youtube.com/embed/${trailer.key}`
+            : null,
         };
 
         setMovie(movieData);
@@ -220,6 +237,13 @@ const MovieDetails = () => {
       <div className='container'>
         <div className='movie-details'>
           <div className='slider-Movies'>
+            {selectedMovie && (
+              <TrailerModal
+                trailerUrl={selectedMovie.trailerUrl}
+                onClose={() => setSelectedMovie(null)}
+              />
+            )}
+
             <div key={movie.id} className='movie-slide'>
               {/* Movie Poster */}
               <div
@@ -241,7 +265,7 @@ const MovieDetails = () => {
                       label='Play Now'
                       noMargin={false}
                       title='Play the movie'
-                      onClick={() => console.log("Play button clicked")}
+                      onClick={() => setSelectedMovie(movie)}
                     />
                     <CustomButton
                       id='add-tooltip'
@@ -264,6 +288,11 @@ const MovieDetails = () => {
                       noMargin={true}
                       title={movie.isMuted ? "Unmute" : "Mute"}
                     />
+
+                    <Tooltip id='play-tooltip' place='bottom' />
+                    <Tooltip id='add-tooltip' place='bottom' />
+                    <Tooltip id='like-tooltip' place='bottom' />
+                    <Tooltip id='volume-tooltip' place='bottom' />
                   </div>
                 </div>
               </div>
@@ -307,7 +336,6 @@ const MovieDetails = () => {
                         <div
                           id={season.id}
                           className='accordion-collapse collapse'
-                          data-bs-parent='#accordionFlushExample'
                         >
                           <div className='accordion-body'>
                             <ul>
@@ -394,17 +422,21 @@ const MovieDetails = () => {
               <div className='movie-info cast-section'>
                 <h4>Cast</h4>
                 <div className='slider-container'>
-                  <Slider {...settings}>
-                    {movie.credits.cast.slice(0, 15).map((actor) => (
-                      <div key={actor.id} className='cast-member'>
-                        <img
-                          src={`https://image.tmdb.org/t/p/original${actor.profile_path}`}
-                          alt={actor.name}
-                          loading='lazy'
-                        />
-                      </div>
-                    ))}
-                  </Slider>
+                  {movie.credits.cast.length > 0 ? (
+                    <Slider {...settings}>
+                      {movie.credits.cast.slice(0, 15).map((actor) => (
+                        <div key={actor.id} className='cast-member'>
+                          <img
+                            src={`https://image.tmdb.org/t/p/original${actor.profile_path}`}
+                            alt={actor.name}
+                            loading='lazy'
+                          />
+                        </div>
+                      ))}
+                    </Slider>
+                  ) : (
+                    <p className='text-center'>No Cast Available</p>
+                  )}
                 </div>
               </div>
               <div className='movie-info reviews'>
@@ -475,7 +507,7 @@ const MovieDetails = () => {
                       );
                     })
                   ) : (
-                    <p>No reviews yet.</p>
+                    <p className='text-center'>No reviews yet.</p>
                   )}
                 </Slider>
               </div>
@@ -489,7 +521,7 @@ const MovieDetails = () => {
                   </h4>
                   <p className='fw-bold'>
                     {type === "tv"
-                      ? movie.first_air_date.split("-")[0]
+                      ? movie.first_air_date.split("-")[0] || "-"
                       : movie.release_date.split("-")[0] || "-"}
                   </p>
                 </div>
@@ -576,35 +608,39 @@ const MovieDetails = () => {
                 </div>
                 <div className='crew mb-4'>
                   <h4>Director</h4>
-                  {movie.credits.crew
-                    .filter(
-                      (member) =>
-                        member.job === "Director" ||
-                        member.job === "Executive Producer"
-                    )
-                    .map((member) => {
-                      return (
-                        <div
-                          key={member.id}
-                          className='badge__movie__details director mb-2'
-                        >
-                          <div className='img'>
-                            <img
-                              src={`${
-                                member.profile_path != null
-                                  ? `https://image.tmdb.org/t/p/w200${member.profile_path}`
-                                  : `/assets/profile-picture.png`
-                              }`}
-                              alt='Profile Picture'
-                            />
-                          </div>{" "}
-                          <div className='text-content'>
-                            <h4 className='text-white mb-1'>{member.name}</h4>
-                            <span>From {member.country || "Unknown"}</span>
+                  {movie.credits.crew > 0 ? (
+                    movie.credits.crew
+                      .filter(
+                        (member) =>
+                          member.job === "Director" ||
+                          member.job === "Executive Producer"
+                      )
+                      .map((member) => {
+                        return (
+                          <div
+                            key={member.id}
+                            className='badge__movie__details director mb-2'
+                          >
+                            <div className='img'>
+                              <img
+                                src={`${
+                                  member.profile_path != null
+                                    ? `https://image.tmdb.org/t/p/w200${member.profile_path}`
+                                    : `/assets/profile-picture.png`
+                                }`}
+                                alt='Profile Picture'
+                              />
+                            </div>{" "}
+                            <div className='text-content'>
+                              <h4 className='text-white mb-1'>{member.name}</h4>
+                              <span>From {member.country || "Unknown"}</span>
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })
+                  ) : (
+                    <p>-</p>
+                  )}
                 </div>
               </div>
             </div>

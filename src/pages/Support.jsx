@@ -73,7 +73,7 @@ const Support = () => {
             <div className='col-lg-8'>
               <form onSubmit={handleSubmit(onSubmit)} className='support-form'>
                 <div className='row'>
-                  <div className='col-md-6 mb-5'>
+                  <div className='col-md-6 mb-3 mb-lg-4 mb-xl-5'>
                     <label htmlFor='firstName' className='form-label'>
                       First Name
                     </label>
@@ -92,7 +92,7 @@ const Support = () => {
                       </div>
                     )}
                   </div>
-                  <div className='col-md-6 mb-5'>
+                  <div className='col-md-6 mb-3 mb-lg-4 mb-xl-5'>
                     <label htmlFor='lastName' className='form-label'>
                       Last Name
                     </label>
@@ -111,7 +111,7 @@ const Support = () => {
                       </div>
                     )}
                   </div>
-                  <div className='col-md-6 mb-5'>
+                  <div className='col-md-6 mb-3 mb-lg-4 mb-xl-5'>
                     <label htmlFor='email' className='form-label'>
                       Email
                     </label>
@@ -130,7 +130,7 @@ const Support = () => {
                       </div>
                     )}
                   </div>
-                  <div className='col-md-6 mb-5'>
+                  <div className='col-md-6 mb-3 mb-lg-4 mb-xl-5'>
                     <label htmlFor='phone' className='form-label'>
                       Phone Number
                     </label>
@@ -147,7 +147,7 @@ const Support = () => {
                       </div>
                     )}
                   </div>
-                  <div className='col-md-12 mb-5'>
+                  <div className='col-md-12 mb-3 mb-lg-4 mb-xl-5'>
                     <label htmlFor='message' className='form-label'>
                       Message
                     </label>

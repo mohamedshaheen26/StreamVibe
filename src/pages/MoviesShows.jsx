@@ -74,9 +74,7 @@ const MoviesShowsPage = () => {
   };
   const handleGenreClick = (genre, type) =>
     navigate(`/movies&shows/genre/${genre.id}/${type}`);
-
-  const handleMovieClick = (genre, type) =>
-    navigate(`/movies&shows/genre/${genre.id}/${type}/`);
+  console.log(movies);
 
   return (
     <div className='movies-shows-page'>

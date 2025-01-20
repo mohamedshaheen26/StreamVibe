@@ -501,6 +501,12 @@ a {
   padding-bottom: var(--padding-bottom);
 }
 
+@media (max-width: 420px) {
+  .hero-content {
+    top: -30px;
+  }
+}
+
 .hero-content .container {
   padding: 0 130px;
 }
@@ -513,7 +519,6 @@ a {
     font-size: 50px;
   }
 }
-
 /* Movie Grid Styling */
 .category-carousel {
   position: relative;
@@ -857,7 +862,18 @@ a {
 
 .device-compatibility .card-text {
   margin-top: 24px;
-  font-size: 16px;
+}
+
+@media (max-width: 991px) {
+  .device-compatibility .card-text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .device-compatibility .card-text {
+    font-size: 14px;
+  }
 }
 
 /* FAQ Styling */
@@ -939,6 +955,10 @@ a {
   font-size: 23px;
 }
 
+.faq .content-left p {
+  font-size: calc(var(--font-size) - 2px);
+}
+
 /* Subscription Plans Styling */
 .subscription-plans {
   padding-bottom: var(--padding-bottom);
@@ -975,6 +995,15 @@ a {
   border-radius: 12px;
   background-color: var(--bg-color-light);
   box-shadow: 0 0 0 1px var(--shadow-color);
+}
+
+@media (max-width: 1400px) {
+  .subscription-plans .plans .card-body .buttons {
+    flex-direction: column;
+    gap: 10px;
+    align-items: unset !important;
+    justify-content: unset !important;
+  }
 }
 
 .subscription-plans .plans .card-title {
@@ -1097,6 +1126,11 @@ footer .social-media li {
   padding: 16px;
   cursor: pointer;
   transition: var(--transition-duration);
+}
+
+footer .social-media li i {
+  font-size: 24px;
+  color: white;
 }
 
 @media (max-width: 1400px) {
@@ -1279,6 +1313,11 @@ footer .footer-bottom-links li:not(:last-child) {
   background-color: var(--primary-color) !important;
 }
 
+.movies-shows-page .movies,
+.movies-shows-page .shows {
+  margin-bottom: 100px;
+}
+
 .movies-shows-page .movies__shows {
   padding: 50px;
   box-shadow: 0 0 0 1px var(--shadow-color);
@@ -1304,7 +1343,7 @@ footer .footer-bottom-links li:not(:last-child) {
 }
 
 .movies-shows-page .toggle-tabs {
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 /* Movies&Shows styling */
@@ -1324,6 +1363,21 @@ footer .footer-bottom-links li:not(:last-child) {
   border-radius: var(--border-red-outset);
   transition: all var(--transition-duration) ease;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .movies-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 525px) {
+  .movies-grid {
+    grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+  }
+  .movies-grid .movie-card {
+    height: 200px;
+  }
 }
 
 .movies-grid .movie-card * {
@@ -1629,6 +1683,10 @@ footer .footer-bottom-links li:not(:last-child) {
   margin-bottom: 30px;
 }
 
+.movie-info.cast-section p {
+  color: var(--text-color);
+}
+
 .movie-info.cast-section .slick-list,
 .movie-info.cast-section .slick-slider,
 .movie-info.cast-section .slick-track {
@@ -1703,6 +1761,18 @@ footer .footer-bottom-links li:not(:last-child) {
   padding: 40px !important;
   position: relative;
   height: 232px;
+}
+
+@media (max-width: 991px) {
+  .badge__movie__details.review {
+    padding: 30px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .badge__movie__details.review {
+    padding: 24px !important;
+  }
 }
 
 .badge__movie__details.review .reviewer {

@@ -37,56 +37,36 @@ const GenrePage = () => {
     const fetchData = async () => {
       try {
         const endpoint = isMovies ? "movie" : "tv";
-        const [
-          page1Response,
-          page2Response,
-          page3Response,
-          page4Response,
-          page5Response,
-        ] = await Promise.all([
-          axios.get(`${API_BASE_URL}/discover/${endpoint}`, {
-            params: {
-              api_key: API_KEY,
-              with_genres: id,
-              page: page * 5 - 4,
-            },
-          }),
-          axios.get(`${API_BASE_URL}/discover/${endpoint}`, {
-            params: {
-              api_key: API_KEY,
-              with_genres: id,
-              page: page * 5 - 3,
-            },
-          }),
-          axios.get(`${API_BASE_URL}/discover/${endpoint}`, {
-            params: {
-              api_key: API_KEY,
-              with_genres: id,
-              page: page * 5 - 2,
-            },
-          }),
-          axios.get(`${API_BASE_URL}/discover/${endpoint}`, {
-            params: {
-              api_key: API_KEY,
-              with_genres: id,
-              page: page * 5 - 1,
-            },
-          }),
-          axios.get(`${API_BASE_URL}/discover/${endpoint}`, {
-            params: {
-              api_key: API_KEY,
-              with_genres: id,
-              page: page * 5,
-            },
-          }),
-        ]);
+        const [page1Response, page2Response, page3Response] = await Promise.all(
+          [
+            axios.get(`${API_BASE_URL}/discover/${endpoint}`, {
+              params: {
+                api_key: API_KEY,
+                with_genres: id,
+                page: page * 3 - 2,
+              },
+            }),
+            axios.get(`${API_BASE_URL}/discover/${endpoint}`, {
+              params: {
+                api_key: API_KEY,
+                with_genres: id,
+                page: page * 3 - 1,
+              },
+            }),
+            axios.get(`${API_BASE_URL}/discover/${endpoint}`, {
+              params: {
+                api_key: API_KEY,
+                with_genres: id,
+                page: page * 3,
+              },
+            }),
+          ]
+        );
 
         const combinedResults = [
           ...page1Response.data.results,
           ...page2Response.data.results,
           ...page3Response.data.results,
-          ...page4Response.data.results,
-          ...page5Response.data.results,
         ];
         setData(combinedResults);
         setTotalPages(Math.ceil(page1Response.data.total_pages / 5));

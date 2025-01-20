@@ -43,13 +43,16 @@ function useMoviesShowsData(type = "movie") {
             }
           });
         } catch (seasonError) {
-          // Skip this season and continue with the next one
+          console.warn(
+            `Failed to fetch season ${seasonNumber} for show ${showId}. Skipping...`
+          );
           continue;
         }
       }
 
       return totalRuntime;
     } catch (error) {
+      console.error(`Failed to fetch show ${showId}:`, error);
       return null;
     }
   };
@@ -90,7 +93,7 @@ function useMoviesShowsData(type = "movie") {
                   const totalRuntime = await fetchTotalRuntimeForShow(movie.id);
                   return {
                     ...movie,
-                    runtime: totalRuntime, // Total runtime for TV shows
+                    runtime: totalRuntime || 0, // Total runtime for TV shows
                     numberOfSeasons: detailsResponse.data.number_of_seasons, // Add number of seasons
                   };
                 } else {
@@ -154,57 +157,68 @@ function useMoviesShowsData(type = "movie") {
         );
         const trendingTransformed = await Promise.all(
           trendingResponse.data.results.map(async (movie) => {
-            const detailsResponse = await axios.get(
-              `${API_BASE_URL}/${type}/${movie.id}?api_key=${API_KEY}&language=en-US`
-            );
+            try {
+              const detailsResponse = await axios.get(
+                `${API_BASE_URL}/${type}/${movie.id}?api_key=${API_KEY}&language=en-US`
+              );
 
-            // Fetch total runtime for TV shows
-            let totalRuntime = null;
-            if (type === "tv") {
-              const numberOfSeasons = detailsResponse.data.number_of_seasons;
-              totalRuntime = 0;
+              let totalRuntime = null;
+              if (type === "tv") {
+                const numberOfSeasons = detailsResponse.data.number_of_seasons;
+                totalRuntime = 0;
 
-              // Fetch episode details for each season and sum the runtime
-              for (
-                let seasonNumber = 1;
-                seasonNumber <= numberOfSeasons;
-                seasonNumber++
-              ) {
-                try {
-                  const seasonResponse = await axios.get(
-                    `${API_BASE_URL}/tv/${movie.id}/season/${seasonNumber}?api_key=${API_KEY}&language=en-US`
-                  );
-                  const episodes = seasonResponse.data.episodes;
+                for (
+                  let seasonNumber = 1;
+                  seasonNumber <= numberOfSeasons;
+                  seasonNumber++
+                ) {
+                  try {
+                    const seasonResponse = await axios.get(
+                      `${API_BASE_URL}/tv/${movie.id}/season/${seasonNumber}?api_key=${API_KEY}&language=en-US`
+                    );
+                    const episodes = seasonResponse.data.episodes;
 
-                  // Sum the runtime for all episodes in this season
-                  episodes.forEach((episode) => {
-                    if (episode.runtime) {
-                      totalRuntime += episode.runtime;
-                    }
-                  });
-                } catch (seasonError) {
-                  // Skip this season and continue with the next one
-                  continue;
+                    episodes.forEach((episode) => {
+                      if (episode.runtime) {
+                        totalRuntime += episode.runtime;
+                      }
+                    });
+                  } catch (seasonError) {
+                    console.warn(
+                      `Failed to fetch season ${seasonNumber} for show ${movie.id}. Skipping...`
+                    );
+                    continue;
+                  }
                 }
               }
-            }
 
-            return {
-              topRatedMovies: [
-                {
-                  ...movie,
-                  runtime:
-                    type === "movie"
-                      ? detailsResponse.data.runtime
-                      : totalRuntime, // Add runtime for movies or TV shows
-                  numberOfSeasons:
-                    type === "tv"
-                      ? detailsResponse.data.number_of_seasons
-                      : null, // Add number of seasons for TV shows
-                },
-              ],
-            };
+              return {
+                topRatedMovies: [
+                  {
+                    ...movie,
+                    runtime:
+                      type === "movie"
+                        ? detailsResponse.data.runtime
+                        : totalRuntime || 0,
+                    numberOfSeasons:
+                      type === "tv"
+                        ? detailsResponse.data.number_of_seasons || 1
+                        : null,
+                  },
+                ],
+              };
+            } catch (error) {
+              console.warn(
+                `Failed to fetch details for ${type} ${movie.id}. Skipping...`
+              );
+              return null; // Skip this item
+            }
           })
+        );
+
+        // Filter out null values from the transformed data
+        const filteredTrending = trendingTransformed.filter(
+          (item) => item !== null
         );
 
         // Fetch new releases

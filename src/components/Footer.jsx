@@ -61,7 +61,7 @@ const Footer = () => {
               <h4 className='mb-4'>Support</h4>
               <ul>
                 <li>
-                  <a href='#'>Contact Us</a>
+                  <a href='support'>Contact Us</a>
                 </li>
               </ul>
             </div>
@@ -69,10 +69,10 @@ const Footer = () => {
               <h4 className='mb-4'>Subscription</h4>
               <ul>
                 <li>
-                  <a href='#'>Plans</a>
+                  <a href='subscriptions'>Plans</a>
                 </li>
                 <li>
-                  <a href='#'>Features</a>
+                  <a href='subscriptions'>Features</a>
                 </li>
               </ul>
             </div>
@@ -81,17 +81,17 @@ const Footer = () => {
               <ul className='social-media d-flex justify-content-between align-content-center'>
                 <li>
                   <a href='#'>
-                    <img src='assets/Facebook.png' alt='Facebook' />
+                    <i class='fa-brands fa-facebook'></i>
                   </a>
                 </li>
                 <li>
                   <a href='#'>
-                    <img src='assets/Twitter.png' alt='Twitter' />
+                    <i class='fa-brands fa-twitter'></i>
                   </a>
                 </li>
                 <li>
                   <a href='#'>
-                    <img src='assets/Linkedin.png' alt='LinkedIn' />
+                    <i class='fa-brands fa-linkedin'></i>
                   </a>
                 </li>
               </ul>
