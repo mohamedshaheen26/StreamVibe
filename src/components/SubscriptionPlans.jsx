@@ -31,7 +31,7 @@ const SubscriptionPlans = () => {
   const planNames = ["Monthly", "Yearly"];
 
   return (
-    <section className='subscription-plans'>
+    <section className='subscription-plans' id='subscription-plans'>
       <div className='container'>
         <div className='d-flex flex-column align-items-end justify-content-between flex-xl-row'>
           <div className='content-left mb-4 mb-xl-0'>

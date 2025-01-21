@@ -9,6 +9,7 @@ import FAQSection from "../components/FAQSection";
 import SubscriptionPlans from "../components/SubscriptionPlans";
 
 import useMoviesShowsData from "../hooks/useMoviesShowsData";
+import NotFound from "./NotFound";
 
 function App() {
   const { randomMoviesByGenre, loading } = useMoviesShowsData("movie");
@@ -38,6 +39,7 @@ function App() {
       <DeviceCompatibility />
       <FAQSection />
       <SubscriptionPlans />
+      <NotFound />
     </>
   );
 }

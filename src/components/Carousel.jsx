@@ -77,7 +77,7 @@ const Carousel = ({
   }, []);
 
   return (
-    <section className='category-carousel'>
+    <section className='category-carousel' id='categories'>
       <h2>{title}</h2>
       {description ? <p className='description'>{description}</p> : ""}
 

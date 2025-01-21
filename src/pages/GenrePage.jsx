@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL, API_KEY } from "../config";
 import { ThreeDots } from "react-loader-spinner";
+import NotFound from "./NotFound";
 
 const GenrePage = () => {
   const { id, type } = useParams();
@@ -96,6 +97,10 @@ const GenrePage = () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
+
+  if (!data) {
+    return <NotFound message='Oops! Something went wrong.' />;
+  }
 
   return (
     <div className='movies-shows-page'>

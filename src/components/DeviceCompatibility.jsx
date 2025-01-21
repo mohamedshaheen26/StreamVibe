@@ -50,7 +50,7 @@ const DeviceCompatibility = () => {
     "With StreamVibe, you can enjoy your favorite movies and TV shows anytime, anywhere.";
 
   return (
-    <section className='device-compatibility'>
+    <section className='device-compatibility' id='device-compatibility'>
       <div className='container'>
         <h2>We Provide You Streaming Experience Across Various Devices</h2>
         <p>{isMobile ? shortText : fullText}</p>

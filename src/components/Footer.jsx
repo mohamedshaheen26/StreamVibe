@@ -1,6 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <footer>
       <div className='container'>
@@ -10,16 +18,48 @@ const Footer = () => {
               <h4 className='mb-4'>Home</h4>
               <ul>
                 <li>
-                  <a href='#'>Categories</a>
+                  <Link
+                    to='#categories'
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection("categories");
+                    }}
+                  >
+                    Categories
+                  </Link>
                 </li>
                 <li>
-                  <a href='#'>Devices</a>
+                  <Link
+                    to='#device-compatibility'
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection("device-compatibility");
+                    }}
+                  >
+                    Devices
+                  </Link>
                 </li>
                 <li>
-                  <a href='#'>Pricing</a>
+                  <Link
+                    to='#subscription-plans'
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection("subscription-plans");
+                    }}
+                  >
+                    Pricing
+                  </Link>
                 </li>
                 <li>
-                  <a href='#'>FAQ</a>
+                  <Link
+                    to='#faq'
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection("faq");
+                    }}
+                  >
+                    FAQ
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -61,7 +101,7 @@ const Footer = () => {
               <h4 className='mb-4'>Support</h4>
               <ul>
                 <li>
-                  <a href='support'>Contact Us</a>
+                  <Link to='support'>Contact Us</Link>
                 </li>
               </ul>
             </div>
@@ -69,10 +109,10 @@ const Footer = () => {
               <h4 className='mb-4'>Subscription</h4>
               <ul>
                 <li>
-                  <a href='subscriptions'>Plans</a>
+                  <Link to='subscriptions'>Plans</Link>
                 </li>
                 <li>
-                  <a href='subscriptions'>Features</a>
+                  <Link to='subscriptions'>Features</Link>
                 </li>
               </ul>
             </div>

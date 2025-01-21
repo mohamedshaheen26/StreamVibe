@@ -9,6 +9,7 @@ import TrailerModal from "../components/TrailerModal";
 import { ThreeDots } from "react-loader-spinner";
 import CustomButton from "../components/CustomButton";
 import useResposiveScreen from "../hooks/useResposiveScreen";
+import NotFound from "./NotFound";
 
 const MovieDetails = () => {
   const { id, type, movieId } = useParams();
@@ -150,7 +151,7 @@ const MovieDetails = () => {
         console.log(movieData);
       } catch (error) {
         console.error("Error fetching movie details:", error);
-        setError("Failed to fetch movie details. Please try again later.");
+        setError("Please check your connection or try again later.");
       } finally {
         setLoading(false);
       }
@@ -225,11 +226,11 @@ const MovieDetails = () => {
   }
 
   if (error) {
-    return <div className='error-message'>{error}</div>;
+    return <NotFound message={error} />;
   }
 
   if (!movie) {
-    return <div>Movie not found.</div>;
+    return <NotFound message='Movie not found.' />;
   }
 
   return (
