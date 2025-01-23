@@ -39,7 +39,6 @@ function App() {
       <DeviceCompatibility />
       <FAQSection />
       <SubscriptionPlans />
-      <NotFound />
     </>
   );
 }
