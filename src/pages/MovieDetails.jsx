@@ -148,7 +148,6 @@ const MovieDetails = () => {
         };
 
         setMovie(movieData);
-        console.log(movieData);
       } catch (error) {
         console.error("Error fetching movie details:", error);
         setError("Please check your connection or try again later.");
@@ -609,39 +608,38 @@ const MovieDetails = () => {
                 </div>
                 <div className='crew mb-4'>
                   <h4>Director</h4>
-                  {movie.credits.crew > 0 ? (
-                    movie.credits.crew
-                      .filter(
-                        (member) =>
-                          member.job === "Director" ||
-                          member.job === "Executive Producer"
-                      )
-                      .map((member) => {
-                        return (
-                          <div
-                            key={member.id}
-                            className='badge__movie__details director mb-2'
-                          >
-                            <div className='img'>
-                              <img
-                                src={`${
-                                  member.profile_path != null
-                                    ? `https://image.tmdb.org/t/p/w200${member.profile_path}`
-                                    : `/assets/profile-picture.png`
-                                }`}
-                                alt='Profile Picture'
-                              />
-                            </div>{" "}
-                            <div className='text-content'>
-                              <h4 className='text-white mb-1'>{member.name}</h4>
-                              <span>From {member.country || "Unknown"}</span>
-                            </div>
-                          </div>
-                        );
-                      })
-                  ) : (
-                    <p>-</p>
+                  {movie.credits.crew <= 0 && (
+                    <p className='text-center'>No Director Available</p>
                   )}
+                  {movie.credits.crew
+                    .filter(
+                      (member) =>
+                        member.job === "Director" ||
+                        member.job === "Executive Producer"
+                    )
+                    .map((member) => {
+                      return (
+                        <div
+                          key={member.id}
+                          className='badge__movie__details director mb-2'
+                        >
+                          <div className='img'>
+                            <img
+                              src={`${
+                                member.profile_path != null
+                                  ? `https://image.tmdb.org/t/p/w200${member.profile_path}`
+                                  : `/assets/profile-picture.png`
+                              }`}
+                              alt='Profile Picture'
+                            />
+                          </div>
+                          <div className='text-content'>
+                            <h4 className='text-white mb-1'>{member.name}</h4>
+                            <span>From {member.country || "Unknown"}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             </div>

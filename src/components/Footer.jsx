@@ -121,17 +121,17 @@ const Footer = () => {
               <ul className='social-media d-flex justify-content-between align-content-center'>
                 <li>
                   <a href='#'>
-                    <i class='fa-brands fa-facebook'></i>
+                    <i className='fa-brands fa-facebook'></i>
                   </a>
                 </li>
                 <li>
                   <a href='#'>
-                    <i class='fa-brands fa-twitter'></i>
+                    <i className='fa-brands fa-twitter'></i>
                   </a>
                 </li>
                 <li>
                   <a href='#'>
-                    <i class='fa-brands fa-linkedin'></i>
+                    <i className='fa-brands fa-linkedin'></i>
                   </a>
                 </li>
               </ul>
