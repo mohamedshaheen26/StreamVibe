@@ -10,7 +10,7 @@ const NotFound = ({ message = "Oops! Something went wrong." }) => {
           <h2>Page not found</h2>
         </div>
         <p>{message}</p>
-        <Link to='/'>Homepage</Link>
+        <Link onClick={() => window.location.reload()}>Reload</Link>
       </div>
     </div>
   );

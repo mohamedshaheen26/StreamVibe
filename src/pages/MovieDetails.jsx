@@ -10,6 +10,7 @@ import { ThreeDots } from "react-loader-spinner";
 import CustomButton from "../components/CustomButton";
 import useResposiveScreen from "../hooks/useResposiveScreen";
 import NotFound from "./NotFound";
+import MovieCard from "../components/MovieCard";
 
 const MovieDetails = () => {
   const { id, type, movieId } = useParams();
@@ -148,6 +149,7 @@ const MovieDetails = () => {
         };
 
         setMovie(movieData);
+        console.log(movieData);
       } catch (error) {
         console.error("Error fetching movie details:", error);
         setError("Please check your connection or try again later.");
@@ -265,6 +267,7 @@ const MovieDetails = () => {
                       label='Play Now'
                       noMargin={false}
                       title='Play the movie'
+                      isDisabled={movie.trailerUrl ? false : true}
                       onClick={() => setSelectedMovie(movie)}
                     />
                     <CustomButton
@@ -300,7 +303,7 @@ const MovieDetails = () => {
           </div>
 
           <div className='row'>
-            <div className='col-md-8'>
+            <div className='col-md-8 mb-4'>
               {type === "tv" && (
                 <div className='movie-info'>
                   <h3 className='text-white mb-5'>Seasons and Episodes</h3>
@@ -308,116 +311,119 @@ const MovieDetails = () => {
                     className='accordion accordion-flush'
                     id='accordionFlushExample'
                   >
-                    {movie.seasons.map((season) => (
-                      <div
-                        className='accordion-item border-0 mb-3'
-                        key={season.id}
-                      >
-                        <h2 className='accordion-header'>
-                          <button
-                            className='accordion-button collapsed'
-                            type='button'
-                            data-bs-toggle='collapse'
-                            data-bs-target={`#${season.id}`}
-                            aria-expanded='false'
-                            aria-controls={`flush-${season.id}`}
+                    {movie.seasons.map(
+                      (season) =>
+                        season.season_number > 0 && (
+                          <div
+                            className='accordion-item border-0 mb-3'
+                            key={season.id}
                           >
-                            <h4 className='mb-0'>
-                              Season{" "}
-                              {season.season_number > 9
-                                ? season.season_number
-                                : `0${season.season_number}`}
-                              <span className='ms-1'>
-                                {season.episode_count} Episodes
-                              </span>
-                            </h4>
-                          </button>
-                        </h2>
-                        <div
-                          id={season.id}
-                          className='accordion-collapse collapse'
-                        >
-                          <div className='accordion-body'>
-                            <ul>
-                              {season.episodes.map((episode) =>
-                                isMobile ? (
-                                  <li
-                                    className='episode-card d-block'
-                                    key={episode.id}
-                                  >
-                                    <div className='d-flex align-items-center mb-3'>
-                                      <div className='eposide-img ms-0'>
-                                        <img
-                                          src={`https://image.tmdb.org/t/p/w200${episode.still_path}`}
-                                          alt={episode.name}
-                                          loading='lazy'
-                                        />
-                                      </div>
-                                      <div className='counter'>
-                                        {episode.episode_number > 9
-                                          ? episode.episode_number
-                                          : `0${episode.episode_number}`}
-                                      </div>
-                                    </div>
-                                    <div className='episode-content'>
-                                      <span className='mb-2'>
-                                        <img
-                                          src='/assets/duration.svg'
-                                          alt='Time'
-                                        />
-                                        {episode.runtime} min
-                                      </span>
-                                      <h5>{episode.name}</h5>
-                                    </div>
-                                  </li>
-                                ) : (
-                                  <li
-                                    className='episode-card d-flex align-items-center'
-                                    key={episode.id}
-                                  >
-                                    <div className='counter'>
-                                      {episode.episode_number > 9
-                                        ? episode.episode_number
-                                        : `0${episode.episode_number}`}
-                                    </div>
-                                    <div className='eposide-img'>
-                                      <img
-                                        src={`https://image.tmdb.org/t/p/w200${
-                                          episode.still_path == null
-                                            ? episode.still_path
-                                            : episode.still_path
-                                        }`}
-                                        alt={episode.name}
-                                        loading='lazy'
-                                      />
-                                    </div>
-                                    <div className='episode-content w-100'>
-                                      <div className='d-flex align-items-center justify-content-between mb-3'>
-                                        <h5>{episode.name}</h5>
-                                        <span>
+                            <h2 className='accordion-header'>
+                              <button
+                                className='accordion-button collapsed'
+                                type='button'
+                                data-bs-toggle='collapse'
+                                data-bs-target={`#${season.id}`}
+                                aria-expanded='false'
+                                aria-controls={`flush-${season.id}`}
+                              >
+                                <h4 className='mb-0'>
+                                  Season{" "}
+                                  {season.season_number > 9
+                                    ? season.season_number
+                                    : `0${season.season_number}`}
+                                  <span className='ms-1'>
+                                    {season.episode_count} Episodes
+                                  </span>
+                                </h4>
+                              </button>
+                            </h2>
+                            <div
+                              id={season.id}
+                              className='accordion-collapse collapse'
+                            >
+                              <div className='accordion-body'>
+                                <ul>
+                                  {season.episodes.map((episode) =>
+                                    isMobile ? (
+                                      <li
+                                        className='episode-card d-block'
+                                        key={episode.id}
+                                      >
+                                        <div className='d-flex align-items-center mb-3'>
+                                          <div className='eposide-img ms-0'>
+                                            <img
+                                              src={`https://image.tmdb.org/t/p/w200${episode.still_path}`}
+                                              alt={episode.name}
+                                              loading='lazy'
+                                            />
+                                          </div>
+                                          <div className='counter'>
+                                            {episode.episode_number > 9
+                                              ? episode.episode_number
+                                              : `0${episode.episode_number}`}
+                                          </div>
+                                        </div>
+                                        <div className='episode-content'>
+                                          <span className='mb-2'>
+                                            <img
+                                              src='/assets/duration.svg'
+                                              alt='Time'
+                                            />
+                                            {episode.runtime} min
+                                          </span>
+                                          <h5>{episode.name}</h5>
+                                        </div>
+                                      </li>
+                                    ) : (
+                                      <li
+                                        className='episode-card d-flex align-items-center'
+                                        key={episode.id}
+                                      >
+                                        <div className='counter'>
+                                          {episode.episode_number > 9
+                                            ? episode.episode_number
+                                            : `0${episode.episode_number}`}
+                                        </div>
+                                        <div className='eposide-img'>
                                           <img
-                                            src='/assets/duration.svg'
-                                            alt='Time'
+                                            src={`https://image.tmdb.org/t/p/w200${
+                                              episode.still_path == null
+                                                ? episode.still_path
+                                                : episode.still_path
+                                            }`}
+                                            alt={episode.name}
+                                            loading='lazy'
                                           />
-                                          {episode.runtime} min
-                                        </span>
-                                      </div>
-                                      <p>{episode.overview}</p>
-                                    </div>
-                                  </li>
-                                )
-                              )}
-                            </ul>
+                                        </div>
+                                        <div className='episode-content w-100'>
+                                          <div className='d-flex align-items-center justify-content-between mb-3'>
+                                            <h5>{episode.name}</h5>
+                                            <span>
+                                              <img
+                                                src='/assets/duration.svg'
+                                                alt='Time'
+                                              />
+                                              {episode.runtime} min
+                                            </span>
+                                          </div>
+                                          <p>{episode.overview}</p>
+                                        </div>
+                                      </li>
+                                    )
+                                  )}
+                                </ul>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    ))}
+                        )
+                    )}
                   </div>
                 </div>
               )}
               <div className='movie-info'>
                 <h4>Overview</h4>
-                <p>{movie.overview}</p>
+                <p>{movie.overview ? movie.overview : "N/A"}</p>
               </div>
               <div className='movie-info cast-section'>
                 <h4>Cast</h4>
@@ -427,7 +433,11 @@ const MovieDetails = () => {
                       {movie.credits.cast.slice(0, 15).map((actor) => (
                         <div key={actor.id} className='cast-member'>
                           <img
-                            src={`https://image.tmdb.org/t/p/original${actor.profile_path}`}
+                            src={`${
+                              actor.profile_path != null
+                                ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+                                : `/assets/profile-picture.png`
+                            }`}
                             alt={actor.name}
                             loading='lazy'
                           />
@@ -512,7 +522,7 @@ const MovieDetails = () => {
                 </Slider>
               </div>
             </div>
-            <div className='col-md-4'>
+            <div className='col-md-4 mb-4'>
               <div className='movie-info'>
                 <div className='release-date mb-4'>
                   <h4>
@@ -534,18 +544,19 @@ const MovieDetails = () => {
                     Available Languages
                   </h4>
                   <div className='d-flex flex-wrap gap-2'>
-                    {movie.spoken_languages.map((language) => {
-                      return (
+                    {movie.spoken_languages.length === 0 ? (
+                      <span className='badge__movie__details'>N/A</span>
+                    ) : (
+                      movie.spoken_languages.map((language) => (
                         <span
                           key={language.english_name}
                           className='badge__movie__details'
                         >
                           {language.english_name}
                         </span>
-                      );
-                    })}
+                      ))
+                    )}
                   </div>
-                  <p></p>
                 </div>
                 <div className='rating mb-4'>
                   <h4>
@@ -586,7 +597,7 @@ const MovieDetails = () => {
                             ★
                           </span>
                         ))}
-                        <span>{(movie.vote_average / 2).toFixed(1) - 0.5}</span>
+                        <span>{(movie.vote_average / 2).toFixed() - 0.5}</span>
                       </div>
                     </div>
                   </div>
@@ -597,28 +608,33 @@ const MovieDetails = () => {
                     Genres
                   </h4>
                   <div className='d-flex flex-wrap gap-2'>
-                    {movie.genres.map((genre) => {
-                      return (
+                    {movie.genres.length === 0 ? (
+                      <span className='badge__movie__details'>N/A</span>
+                    ) : (
+                      movie.genres.map((genre) => (
                         <span key={genre.id} className='badge__movie__details'>
                           {genre.name}
                         </span>
-                      );
-                    })}
+                      ))
+                    )}
                   </div>
                 </div>
                 <div className='crew mb-4'>
                   <h4>Director</h4>
-                  {movie.credits.crew <= 0 && (
+                  {movie.credits.crew.filter(
+                    (member) =>
+                      member.job === "Director" ||
+                      member.job === "Executive Producer"
+                  ).length === 0 ? (
                     <p className='text-center'>No Director Available</p>
-                  )}
-                  {movie.credits.crew
-                    .filter(
-                      (member) =>
-                        member.job === "Director" ||
-                        member.job === "Executive Producer"
-                    )
-                    .map((member) => {
-                      return (
+                  ) : (
+                    movie.credits.crew
+                      .filter(
+                        (member) =>
+                          member.job === "Director" ||
+                          member.job === "Executive Producer"
+                      )
+                      .map((member) => (
                         <div
                           key={member.id}
                           className='badge__movie__details director mb-2'
@@ -638,8 +654,37 @@ const MovieDetails = () => {
                             <span>From {member.country || "Unknown"}</span>
                           </div>
                         </div>
-                      );
-                    })}
+                      ))
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className='col-md-12'>
+              <div
+                className='movies__shows mb-0'
+                data-genre={
+                  type === "movie" ? "Similar Movies" : "Similar TV Shows"
+                }
+              >
+                <div className='movies-grid'>
+                  {movie.similar.results.length > 0 ? (
+                    movie.similar.results
+                      .sort((a, b) => b.vote_average - a.vote_average)
+                      .slice(0, 4)
+                      .map((similarItem) => (
+                        <MovieCard
+                          key={similarItem.id}
+                          item={similarItem}
+                          id={similarItem.id}
+                          isMovies={type === "movie"}
+                        />
+                      ))
+                  ) : (
+                    <p className='text-center'>
+                      No Similar {type === "movie" ? "Movies" : "TV Shows"}{" "}
+                      Available
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

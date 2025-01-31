@@ -96,7 +96,9 @@ const Carousel = ({
             >
               <i className='fas fa-arrow-left'></i>
             </div>
-            <div className={`custom-pagination-${carouselId}`}></div>
+            <div
+              className={`custom-pagination-${carouselId} d-flex mx-1`}
+            ></div>
             <div
               className={`custom-next-${carouselId} carousel-next p-3 d-flex align-items-center justify-content-center`}
             >

@@ -164,6 +164,12 @@ a {
   background-color: var(--hover-color);
 }
 
+.btn.disabled,
+.btn:disabled,
+fieldset:disabled .btn {
+  background-color: var(--primary-color);
+}
+
 @media (min-width: 1400px) {
   .custom-button {
     padding: 18px 24px;

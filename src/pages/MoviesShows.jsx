@@ -4,6 +4,7 @@ import Slider from "react-slick";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Carousel from "../components/Carousel";
+import NotFound from "../pages/NotFound";
 import CustomButton from "../components/CustomButton";
 import ToggleTabs from "../components/ToggleTabs";
 import TrailerModal from "../components/TrailerModal";
@@ -43,8 +44,8 @@ const MoviesShowsPage = () => {
     error: showsError,
   } = useMoviesShowsData("tv");
 
-  if (moviesError) return <p>Error: {moviesError.message}</p>;
-  if (showsError) return <p>Error: {showsError.message}</p>;
+  if (moviesError) return <NotFound />;
+  if (showsError) return <NotFound />;
 
   const settings = {
     dots: true,
@@ -74,7 +75,6 @@ const MoviesShowsPage = () => {
   };
   const handleGenreClick = (genre, type) =>
     navigate(`/movies&shows/genre/${genre.id}/${type}`);
-  console.log(movies);
 
   return (
     <div className='movies-shows-page'>
