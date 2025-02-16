@@ -1,6 +1,6 @@
 # StreamVibe
 
-A modern, responsive dashboard built with React.js. It features interactive data visualization and a clean UI design. Users can navigate seamlessly using React Router, receive real-time updates with React Toastify, and enjoy smooth loading states with React Content Loader.
+StreamVibe is your ultimate destination for discovering movies and TV shows. Built with React and powered by the TMDb API, it offers a sleek, user-friendly interface to explore trending content, detailed movie information, and personalized recommendations. Users can easily navigate through genres, watch trailers, and keep track of their favorite films. With real-time updates, responsive design, and interactive features, StreamVibe provides a seamless and engaging experience for movie enthusiasts.
 
 ## Features
 
